@@ -1,0 +1,6 @@
+@WebSeries_HostAddress = http://localhost:5114
+
+GET {{WebSeries_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
