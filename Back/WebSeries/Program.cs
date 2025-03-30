@@ -1,3 +1,7 @@
+using Aplication.Implements;
+using Aplication.Interface;
+using Infrastructure.Implements;
+using Infrastructure.Interface;
 using WebSeries.Data;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,6 +14,14 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<ProjectDbContext>();
+
+// Configuración de inyección de dependencias de la capa de Aplicacion 
+builder.Services.AddScoped<IActoresService, ActoresService>();
+
+// Configuración de inyección de dependencias de la capa de Infrastructura
+builder.Services.AddScoped<IActoresRepository, ActoresRepository>();
+
+
 
 var app = builder.Build();
 

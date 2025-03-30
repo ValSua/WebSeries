@@ -1,103 +1,98 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using WebSeries.Data;
+﻿using Aplication.Interface;
+using Microsoft.AspNetCore.Mvc;
+using Transversal.Helpers;
 using WebSeries.Models;
 
 namespace WebSeries.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
     public class ActoresController : ControllerBase
     {
-        private readonly ProjectDbContext _context;
+        /// <summary>
+        /// The actores service
+        /// </summary>
+        private readonly IActoresService _actoresService;
 
-        public ActoresController(ProjectDbContext context)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ActoresController"/> class.
+        /// </summary>
+        /// <param name="actoresService">The actores service.</param>
+        public ActoresController(IActoresService actoresService)
         {
-            _context = context;
+            _actoresService = actoresService;
         }
 
-        // GET: api/Actores
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<Actore>>> GetActores()
-        {
-            return await _context.Actores.ToListAsync();
-        }
+        /// <summary>
+        /// Gets the actores.
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet(RoutesPath.Actores.GetActores)]
+        public async Task<IEnumerable<Actore>> GetActores() => await _actoresService.GetActores();
 
-        // GET: api/Actores/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Actore>> GetActore(long id)
-        {
-            var actore = await _context.Actores.FindAsync(id);
+        [HttpGet(RoutesPath.Actores.GetActorById)]
+        public async Task<Actore> GetActorById(long id) => await _actoresService.GetActorById(id);
 
-            if (actore == null)
-            {
-                return NotFound();
-            }
+        //// PUT: api/Actores/5
+        //// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        //[HttpPut("{id}")]
+        //public async Task<IActionResult> PutActore(long id, Actore actore)
+        //{
+        //    if (id != actore.ActorId)
+        //    {
+        //        return BadRequest();
+        //    }
 
-            return actore;
-        }
+        //    _context.Entry(actore).State = EntityState.Modified;
 
-        // PUT: api/Actores/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutActore(long id, Actore actore)
-        {
-            if (id != actore.ActorId)
-            {
-                return BadRequest();
-            }
+        //    try
+        //    {
+        //        await _context.SaveChangesAsync();
+        //    }
+        //    catch (DbUpdateConcurrencyException)
+        //    {
+        //        if (!ActoreExists(id))
+        //        {
+        //            return NotFound();
+        //        }
+        //        else
+        //        {
+        //            throw;
+        //        }
+        //    }
 
-            _context.Entry(actore).State = EntityState.Modified;
+        //    return NoContent();
+        //}
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ActoreExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+        //// POST: api/Actores
+        //// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        //[HttpPost]
+        //public async Task<ActionResult<Actore>> PostActore(Actore actore)
+        //{
+        //    _context.Actores.Add(actore);
+        //    await _context.SaveChangesAsync();
 
-            return NoContent();
-        }
+        //    return CreatedAtAction("GetActore", new { id = actore.ActorId }, actore);
+        //}
 
-        // POST: api/Actores
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public async Task<ActionResult<Actore>> PostActore(Actore actore)
-        {
-            _context.Actores.Add(actore);
-            await _context.SaveChangesAsync();
+        //// DELETE: api/Actores/5
+        //[HttpDelete("{id}")]
+        //public async Task<IActionResult> DeleteActore(long id)
+        //{
+        //    var actore = await _context.Actores.FindAsync(id);
+        //    if (actore == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            return CreatedAtAction("GetActore", new { id = actore.ActorId }, actore);
-        }
+        //    _context.Actores.Remove(actore);
+        //    await _context.SaveChangesAsync();
 
-        // DELETE: api/Actores/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteActore(long id)
-        {
-            var actore = await _context.Actores.FindAsync(id);
-            if (actore == null)
-            {
-                return NotFound();
-            }
+        //    return NoContent();
+        //}
 
-            _context.Actores.Remove(actore);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
-        }
-
-        private bool ActoreExists(long id)
-        {
-            return _context.Actores.Any(e => e.ActorId == id);
-        }
+        //private bool ActoreExists(long id)
+        //{
+        //    return _context.Actores.Any(e => e.ActorId == id);
+        //}
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace WebSeries.Models;
 
@@ -13,7 +14,10 @@ public partial class Actore
 
     public long PaisId { get; set; }
 
-    public virtual Paise Pais { get; set; } = null!;
+    [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+    public string PaisNombre { get; set; } = null!;
 
-    public virtual ICollection<Pelicula> Peliculas { get; set; } = new List<Pelicula>();
+    public Paise Pais { get; set; } = null!;
+
+    public List<Pelicula> Peliculas { get; set; } = new List<Pelicula>();
 }
