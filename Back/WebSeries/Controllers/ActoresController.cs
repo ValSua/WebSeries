@@ -1,7 +1,7 @@
 ﻿using Aplication.Interface;
 using Microsoft.AspNetCore.Mvc;
+using Transversal.Dto;
 using Transversal.Helpers;
-using WebSeries.Models;
 
 namespace WebSeries.Controllers
 {
@@ -27,72 +27,40 @@ namespace WebSeries.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet(RoutesPath.Actores.GetActores)]
-        public async Task<IEnumerable<Actore>> GetActores() => await _actoresService.GetActores();
+        public async Task<IEnumerable<GetActorDto>> GetActores() => await _actoresService.GetActores();
 
+        /// <summary>
+        /// Gets the actor by identifier.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns></returns>
         [HttpGet(RoutesPath.Actores.GetActorById)]
-        public async Task<Actore> GetActorById(long id) => await _actoresService.GetActorById(id);
+        public async Task<GetActorDto> GetActorById(long id) => await _actoresService.GetActorById(id);
 
-        //// PUT: api/Actores/5
-        //// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        //[HttpPut("{id}")]
-        //public async Task<IActionResult> PutActore(long id, Actore actore)
-        //{
-        //    if (id != actore.ActorId)
-        //    {
-        //        return BadRequest();
-        //    }
+        /// <summary>
+        /// Updates the actor.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <param name="actore">The actore.</param>
+        /// <returns></returns>
+        [HttpPut(RoutesPath.Actores.UpdateActor)]
+        public async Task<bool> UpdateActor(long id, CreateActorDto updateActoreDto) => await _actoresService.UpdateActor(id, updateActoreDto);
 
-        //    _context.Entry(actore).State = EntityState.Modified;
+        /// <summary>
+        /// Creates the actor.
+        /// </summary>
+        /// <param name="createActoreDto">The create actore dto.</param>
+        /// <returns></returns>
+        [HttpPost(RoutesPath.Actores.CreateActor)]
+        public async Task<CreateActorDto> CreateActor(CreateActorDto createActoreDto) => await _actoresService.CreateActor(createActoreDto);
 
-        //    try
-        //    {
-        //        await _context.SaveChangesAsync();
-        //    }
-        //    catch (DbUpdateConcurrencyException)
-        //    {
-        //        if (!ActoreExists(id))
-        //        {
-        //            return NotFound();
-        //        }
-        //        else
-        //        {
-        //            throw;
-        //        }
-        //    }
+        /// <summary>
+        /// Deletes the actor.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns></returns>
+        [HttpPost(RoutesPath.Actores.DeleteActor)]
+        public async Task<bool> DeleteActor(long id) => await _actoresService.DeleteActor(id);
 
-        //    return NoContent();
-        //}
-
-        //// POST: api/Actores
-        //// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        //[HttpPost]
-        //public async Task<ActionResult<Actore>> PostActore(Actore actore)
-        //{
-        //    _context.Actores.Add(actore);
-        //    await _context.SaveChangesAsync();
-
-        //    return CreatedAtAction("GetActore", new { id = actore.ActorId }, actore);
-        //}
-
-        //// DELETE: api/Actores/5
-        //[HttpDelete("{id}")]
-        //public async Task<IActionResult> DeleteActore(long id)
-        //{
-        //    var actore = await _context.Actores.FindAsync(id);
-        //    if (actore == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    _context.Actores.Remove(actore);
-        //    await _context.SaveChangesAsync();
-
-        //    return NoContent();
-        //}
-
-        //private bool ActoreExists(long id)
-        //{
-        //    return _context.Actores.Any(e => e.ActorId == id);
-        //}
     }
 }

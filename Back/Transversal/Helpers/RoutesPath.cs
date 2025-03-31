@@ -33,16 +33,13 @@
             /// <summary>
             /// The update actor
             /// </summary>
-            public const string UpdateActor = "api/actores/updateActor";
+            public const string UpdateActor = "api/actores/updateActor/{id:long}";
             /// <summary>
             /// The delete actor
             /// </summary>
-            public const string DeleteActor = "api/actores/deleteActor";
+            public const string DeleteActor = "api/actores/deleteActor/{id:long}";
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public static class Directores
         {
             /// <summary>
@@ -67,9 +64,6 @@
             public const string DeleteDirector = "api/directores/deleteDirector";
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public static class Generos
         {
             /// <summary>
@@ -94,9 +88,6 @@
             public const string DeleteGenero = "api/generos/deleteGenero";
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public static class Paises
         {
             /// <summary>
@@ -121,9 +112,6 @@
             public const string DeletePais = "api/paises/deletePais";
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public static class Peliculas
         {
             /// <summary>
