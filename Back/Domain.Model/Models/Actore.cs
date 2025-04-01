@@ -1,4 +1,7 @@
-﻿namespace WebSeries.Models;
+﻿using System;
+using System.Collections.Generic;
+
+namespace WebSeries.Models;
 
 public partial class Actore
 {
@@ -14,5 +17,5 @@ public partial class Actore
 
     public virtual Paise Pais { get; set; } = null!;
 
-    public virtual List<Pelicula> Peliculas { get; set; } = new List<Pelicula>();
+    public virtual ICollection<Pelicula> Peliculas { get; set; } = new List<Pelicula>();
 }

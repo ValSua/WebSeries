@@ -77,11 +77,6 @@ public partial class ProjectDbContext : DbContext
             entity.Property(e => e.ImagenPortada).HasMaxLength(500);
             entity.Property(e => e.Titulo).HasMaxLength(255);
 
-            entity.HasOne(d => d.Director).WithMany(p => p.Peliculas)
-                .HasForeignKey(d => d.DirectorId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_Peliculas_Directores");
-
             entity.HasOne(d => d.Genero).WithMany(p => p.Peliculas)
                 .HasForeignKey(d => d.GeneroId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
@@ -91,6 +86,23 @@ public partial class ProjectDbContext : DbContext
                 .HasForeignKey(d => d.PaisId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Peliculas_Paises");
+
+            entity.HasMany(d => d.Directors).WithMany(p => p.Peliculas)
+               .UsingEntity<Dictionary<string, object>>(
+                   "PeliculasDirectore",
+                   r => r.HasOne<Directore>().WithMany()
+                       .HasForeignKey("DirectorId")
+                       .OnDelete(DeleteBehavior.ClientSetNull)
+                       .HasConstraintName("FK__Peliculas__Direc__6E01572D"),
+                   l => l.HasOne<Pelicula>().WithMany()
+                       .HasForeignKey("PeliculaId")
+                       .OnDelete(DeleteBehavior.ClientSetNull)
+                       .HasConstraintName("FK__Peliculas__Pelic__6D0D32F4"),
+                   j =>
+                   {
+                       j.HasKey("PeliculaId", "DirectorId").HasName("PK__Pelicula__28AA95283CE263F9");
+                       j.ToTable("Peliculas_Directores");
+                   });
 
             entity.HasMany(d => d.Actors).WithMany(p => p.Peliculas)
                 .UsingEntity<Dictionary<string, object>>(

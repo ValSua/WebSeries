@@ -1,7 +1,7 @@
-﻿using Transversal.Dto;
+﻿using Transversal.Dto.Actores;
 using WebSeries.Models;
 
-namespace Infrastructure.Interface
+namespace Infrastructure.Interface.Actores
 {
     public interface IActoresRepository
     {

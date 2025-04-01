@@ -49,7 +49,7 @@
             /// <summary>
             /// The get director by identifier
             /// </summary>
-            public const string GetDirectorById = "api/directores/getDirectorById";
+            public const string GetDirectorById = "api/directores/getDirectorById/{id:long}";
             /// <summary>
             /// The create director
             /// </summary>
@@ -57,11 +57,11 @@
             /// <summary>
             /// The update director
             /// </summary>
-            public const string UpdateDirector = "api/directores/updateDirector";
+            public const string UpdateDirector = "api/directores/updateDirector/{id:long}";
             /// <summary>
             /// The delete director
             /// </summary>
-            public const string DeleteDirector = "api/directores/deleteDirector";
+            public const string DeleteDirector = "api/directores/deleteDirector/{id:long}";
         }
 
         public static class Generos

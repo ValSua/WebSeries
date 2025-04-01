@@ -1,17 +1,17 @@
-﻿namespace Transversal.Dto
+﻿namespace Transversal.Dto.Directores
 {
     /// <summary>
     /// 
     /// </summary>
-    public class CreateActorDto
+    public class CreateDirectorDto
     {
         /// <summary>
-        /// Gets or sets the actor identifier.
+        /// Gets or sets the director identifier.
         /// </summary>
         /// <value>
-        /// The actor identifier.
+        /// The director identifier.
         /// </value>
-        public long ActorId { get; set; }
+        public long DirectorId { get; set; }
 
         /// <summary>
         /// Gets or sets the nombre.

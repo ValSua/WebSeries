@@ -1,6 +1,6 @@
-﻿using Transversal.Dto;
+﻿using Transversal.Dto.Actores;
 
-namespace Aplication.Interface
+namespace Aplication.Interface.Actores
 {
     public interface IActoresService
     {

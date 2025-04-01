@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Transversal.Dto
+namespace Transversal.Dto.Actores
 {
     public class GetActorDto
     {

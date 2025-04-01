@@ -13,6 +13,8 @@ public partial class Directore
 
     public long PaisId { get; set; }
 
+    public bool IsDeleted { get; set; }
+
     public virtual Paise Pais { get; set; } = null!;
 
     public virtual ICollection<Pelicula> Peliculas { get; set; } = new List<Pelicula>();

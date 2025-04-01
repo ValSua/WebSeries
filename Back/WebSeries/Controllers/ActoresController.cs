@@ -1,6 +1,6 @@
-﻿using Aplication.Interface;
+﻿using Aplication.Interface.Actores;
 using Microsoft.AspNetCore.Mvc;
-using Transversal.Dto;
+using Transversal.Dto.Actores;
 using Transversal.Helpers;
 
 namespace WebSeries.Controllers
@@ -59,7 +59,7 @@ namespace WebSeries.Controllers
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <returns></returns>
-        [HttpPost(RoutesPath.Actores.DeleteActor)]
+        [HttpPut(RoutesPath.Actores.DeleteActor)]
         public async Task<bool> DeleteActor(long id) => await _actoresService.DeleteActor(id);
 
     }

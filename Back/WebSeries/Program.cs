@@ -1,7 +1,11 @@
-using Aplication.Implements;
-using Aplication.Interface;
-using Infrastructure.Implements;
-using Infrastructure.Interface;
+using Aplication.Implements.Actores;
+using Aplication.Implements.Directores;
+using Aplication.Interface.Actores;
+using Aplication.Interface.Directores;
+using Infrastructure.Implements.Actores;
+using Infrastructure.Implements.Directores;
+using Infrastructure.Interface.Actores;
+using Infrastructure.Interface.Directores;
 using WebSeries.Data;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -17,10 +21,11 @@ builder.Services.AddDbContext<ProjectDbContext>();
 
 // Configuración de inyección de dependencias de la capa de Aplicacion 
 builder.Services.AddScoped<IActoresService, ActoresService>();
+builder.Services.AddScoped<IDirectoresService, DirectoresService>();
 
 // Configuración de inyección de dependencias de la capa de Infrastructura
 builder.Services.AddScoped<IActoresRepository, ActoresRepository>();
-
+builder.Services.AddScoped<IDirectoresRepository, DirectoresRepository>();
 
 
 var app = builder.Build();

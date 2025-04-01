@@ -1,10 +1,10 @@
-﻿using Infrastructure.Interface;
+﻿using Infrastructure.Interface.Actores;
 using Microsoft.EntityFrameworkCore;
-using Transversal.Dto;
+using Transversal.Dto.Actores;
 using WebSeries.Data;
 using WebSeries.Models;
 
-namespace Infrastructure.Implements
+namespace Infrastructure.Implements.Actores
 {
     public class ActoresRepository : IActoresRepository
     {
@@ -77,7 +77,7 @@ namespace Infrastructure.Implements
 
             return new CreateActorDto
             {
-                ActorId = actore.ActorId,  
+                ActorId = actore.ActorId,
                 Nombre = actore.Nombre,
                 Apellido = actore.Apellido,
                 PaisId = actore.PaisId

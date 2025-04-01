@@ -1,9 +1,9 @@
-﻿using Aplication.Interface;
-using Infrastructure.Interface;
-using Transversal.Dto;
+﻿using Aplication.Interface.Actores;
+using Infrastructure.Interface.Actores;
+using Transversal.Dto.Actores;
 using WebSeries.Models;
 
-namespace Aplication.Implements
+namespace Aplication.Implements.Actores
 {
     public class ActoresService : IActoresService
     {
@@ -40,7 +40,7 @@ namespace Aplication.Implements
             var result = await _actoresRepository.GetActorById(id);
             var actorMapped = AutoMapperConfig.GetMapper<Actore, GetActorDto>().Map<GetActorDto>(result);
             var peliculasTitulo = result.Peliculas.Select(p => p.Titulo).ToList();
-       
+
             actorMapped.PeliculasTitulo = peliculasTitulo;
 
             return actorMapped;
@@ -50,7 +50,7 @@ namespace Aplication.Implements
         {
             var actorMapped = AutoMapperConfig.GetMapper<CreateActorDto, Actore>().Map<Actore>(updateActoreDto);
             actorMapped.ActorId = id;
-            
+
             var result = await _actoresRepository.UpdateActor(id, actorMapped);
             return result;
         }
