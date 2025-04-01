@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace WebSeries.Models;
+﻿namespace WebSeries.Models;
 
 public partial class Paise
 {

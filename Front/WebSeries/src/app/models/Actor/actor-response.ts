@@ -3,6 +3,6 @@ import { GetActorDto } from "./getActorDto";
 
 export interface ActorResponse {
   isSuccess: boolean;
-  result: GetActorDto[];
+  result: GetActorDto;
   message: string;
 }

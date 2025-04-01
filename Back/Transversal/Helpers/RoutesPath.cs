@@ -97,7 +97,7 @@
             /// <summary>
             /// The get pais by identifier
             /// </summary>
-            public const string GetPaisById = "api/paises/getPaisById";
+            public const string GetPaisById = "api/paises/getPaisById/{id:long}";
             /// <summary>
             /// The create pais
             /// </summary>
@@ -105,11 +105,11 @@
             /// <summary>
             /// The update pais
             /// </summary>
-            public const string UpdatePais = "api/paises/updatePais";
+            public const string UpdatePais = "api/paises/updatePais/{id:long}";
             /// <summary>
             /// The delete pais
             /// </summary>
-            public const string DeletePais = "api/paises/deletePais";
+            public const string DeletePais = "api/paises/deletePais/{id:long}";
         }
 
         public static class Peliculas

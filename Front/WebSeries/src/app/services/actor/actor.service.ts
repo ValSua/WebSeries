@@ -7,6 +7,7 @@ import { CreateResponse } from '../../models/Actor/create-response';
 import { EditResponse } from '../../models/Actor/edit-response';
 import { DeleteResponse } from '../../models/Actor/delete-response';
 import { CreateActorDto } from '../../models/Actor/updateActorDto';
+import { GetActorDto } from '../../models/Actor/getActorDto';
 
 @Injectable({
   providedIn: 'root'
@@ -24,10 +25,9 @@ export class ActorService {
     );
   }
 
-  getActorById(id: string): Observable<ActorResponse> {
-    return this.http.get<ActorResponse>(
-      `${this._baseUrl}/actores/getActorById/${id}`
-    );
+  getActorById(id: string): Observable<GetActorDto> {
+    return this.http.get<GetActorDto>(
+      `${this._baseUrl}/actores/getActorById/${id}`);
   }
 
   createActor(createActor: CreateActorDto): Observable<CreateResponse> {
@@ -47,7 +47,7 @@ export class ActorService {
   deleteActor(id: string): Observable<DeleteResponse> {
     return this.http.put<DeleteResponse>(
       `${this._baseUrl}/actores/deleteActor/${id}`,
-      {} 
+      {}
     );
   }
 }

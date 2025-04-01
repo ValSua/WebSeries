@@ -47,7 +47,7 @@ export class ActoresComponent implements OnInit {
   }
 
   openActorEdit(id: number) {
-    this.router.navigate([this.edithPath])
+    this.router.navigate([this.edithPath, id]);
   }
 
   eliminarActor(id: number) {
