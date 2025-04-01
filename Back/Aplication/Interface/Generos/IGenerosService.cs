@@ -9,6 +9,5 @@ namespace Aplication.Interface.Generos
         Task<bool> UpdateGenero(long id, CreateGeneroDto updateGeneroDto);
         Task<CreateGeneroDto> CreateGenero(CreateGeneroDto createGeneroDto);
         Task<bool> DeleteGenero(long id);
-
     }
 }
