@@ -23,6 +23,4 @@ public partial class Pelicula
     public virtual Paise Pais { get; set; } = null!;
     public virtual ICollection<Directore> Directors { get; set; } = new List<Directore>();
     public virtual ICollection<Actore> Actors { get; set; } = new List<Actore>();
-
-
 }

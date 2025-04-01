@@ -73,7 +73,7 @@
             /// <summary>
             /// The get genero by identifier
             /// </summary>
-            public const string GetGeneroById = "api/generos/getGeneroById";
+            public const string GetGeneroById = "api/generos/getGeneroById/{id:long}";
             /// <summary>
             /// The create genero
             /// </summary>
@@ -81,11 +81,11 @@
             /// <summary>
             /// The update genero
             /// </summary>
-            public const string UpdateGenero = "api/generos/updateGenero";
+            public const string UpdateGenero = "api/generos/updateGenero/{id:long}";
             /// <summary>
             /// The delete genero
             /// </summary>
-            public const string DeleteGenero = "api/generos/deleteGenero";
+            public const string DeleteGenero = "api/generos/deleteGenero/{id:long}";
         }
 
         public static class Paises
@@ -121,7 +121,7 @@
             /// <summary>
             /// The get pelicula by identifier
             /// </summary>
-            public const string GetPeliculaById = "api/peliculas/getPeliculaById";
+            public const string GetPeliculaById = "api/peliculas/getPeliculaById/{id:long}";
             /// <summary>
             /// The create pelicula
             /// </summary>
@@ -129,11 +129,11 @@
             /// <summary>
             /// The update pelicula
             /// </summary>
-            public const string UpdatePelicula = "api/peliculas/updatePelicula";
+            public const string UpdatePelicula = "api/peliculas/updatePelicula/{id:long}";
             /// <summary>
             /// The delete pelicula
             /// </summary>
-            public const string DeletePelicula = "api/peliculas/deletePelicula";
+            public const string DeletePelicula = "api/peliculas/deletePelicula/{id:long}";
         }
     }
 }

@@ -1,103 +1,65 @@
-﻿//using Microsoft.AspNetCore.Mvc;
-//using Microsoft.EntityFrameworkCore;
-//using WebSeries.Data;
-//using WebSeries.Models;
+﻿using Aplication.Interface.Generos;
+using Microsoft.AspNetCore.Mvc;
+using Transversal.Dto.Generos;
+using Transversal.Helpers;
 
-//namespace WebSeries.Controllers
-//{
-//    [Route("api/[controller]")]
-//    [ApiController]
-//    public class GenerosController : ControllerBase
-//    {
-//        private readonly ProjectDbContext _context;
+namespace WebSeries.Controllers
+{
+    [ApiController]
+    public class GenerosController : ControllerBase
+    {
+        /// <summary>
+        /// The generos service
+        /// </summary>
+        private readonly IGenerosService _generosService;
 
-//        public GenerosController(ProjectDbContext context)
-//        {
-//            _context = context;
-//        }
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GenerosController"/> class.
+        /// </summary>
+        /// <param name="generosService">The generos service.</param>
+        public GenerosController(IGenerosService generosService)
+        {
+            _generosService = generosService;
+        }
 
-//        // GET: api/Generos
-//        [HttpGet]
-//        public async Task<ActionResult<IEnumerable<Genero>>> GetGeneros()
-//        {
-//            return await _context.Generos.ToListAsync();
-//        }
+        /// <summary>
+        /// Gets the generos.
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet(RoutesPath.Generos.GetGeneros)]
+        public async Task<IEnumerable<GetGeneroDto>> GetGeneros() => await _generosService.GetGeneros();
 
-//        // GET: api/Generos/5
-//        [HttpGet("{id}")]
-//        public async Task<ActionResult<Genero>> GetGenero(long id)
-//        {
-//            var genero = await _context.Generos.FindAsync(id);
+        /// <summary>
+        /// Gets the genero by identifier.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns></returns>
+        [HttpGet(RoutesPath.Generos.GetGeneroById)]
+        public async Task<GetGeneroDto> GetGeneroById(long id) => await _generosService.GetGeneroById(id);
 
-//            if (genero == null)
-//            {
-//                return NotFound();
-//            }
+        /// <summary>
+        /// Updates the genero.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <param name="genero">The genero.</param>
+        /// <returns></returns>
+        [HttpPut(RoutesPath.Generos.UpdateGenero)]
+        public async Task<bool> UpdateGenero(long id, CreateGeneroDto updateGeneroDto) => await _generosService.UpdateGenero(id, updateGeneroDto);
 
-//            return genero;
-//        }
+        /// <summary>
+        /// Creates the genero.
+        /// </summary>
+        /// <param name="createActoreDto">The create genero dto.</param>
+        /// <returns></returns>
+        [HttpPost(RoutesPath.Generos.CreateGenero)]
+        public async Task<CreateGeneroDto> CreateGenero(CreateGeneroDto createGeneroDto) => await _generosService.CreateGenero(createGeneroDto);
 
-//        // PUT: api/Generos/5
-//        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-//        [HttpPut("{id}")]
-//        public async Task<IActionResult> PutGenero(long id, Genero genero)
-//        {
-//            if (id != genero.GeneroId)
-//            {
-//                return BadRequest();
-//            }
-
-//            _context.Entry(genero).State = EntityState.Modified;
-
-//            try
-//            {
-//                await _context.SaveChangesAsync();
-//            }
-//            catch (DbUpdateConcurrencyException)
-//            {
-//                if (!GeneroExists(id))
-//                {
-//                    return NotFound();
-//                }
-//                else
-//                {
-//                    throw;
-//                }
-//            }
-
-//            return NoContent();
-//        }
-
-//        // POST: api/Generos
-//        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-//        [HttpPost]
-//        public async Task<ActionResult<Genero>> PostGenero(Genero genero)
-//        {
-//            _context.Generos.Add(genero);
-//            await _context.SaveChangesAsync();
-
-//            return CreatedAtAction("GetGenero", new { id = genero.GeneroId }, genero);
-//        }
-
-//        // DELETE: api/Generos/5
-//        [HttpDelete("{id}")]
-//        public async Task<IActionResult> DeleteGenero(long id)
-//        {
-//            var genero = await _context.Generos.FindAsync(id);
-//            if (genero == null)
-//            {
-//                return NotFound();
-//            }
-
-//            _context.Generos.Remove(genero);
-//            await _context.SaveChangesAsync();
-
-//            return NoContent();
-//        }
-
-//        private bool GeneroExists(long id)
-//        {
-//            return _context.Generos.Any(e => e.GeneroId == id);
-//        }
-//    }
-//}
+        /// <summary>
+        /// Deletes the genero.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns></returns>
+        [HttpPut(RoutesPath.Generos.DeleteGenero)]
+        public async Task<bool> DeleteGenero(long id) => await _generosService.DeleteGenero(id);
+    }
+}
