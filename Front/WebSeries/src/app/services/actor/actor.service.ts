@@ -1,0 +1,53 @@
+import { inject, Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { ActoresResponse } from '../../models/Actor/actores-response';
+import { ActorResponse } from '../../models/Actor/actor-response';
+import { CreateResponse } from '../../models/Actor/create-response';
+import { EditResponse } from '../../models/Actor/edit-response';
+import { DeleteResponse } from '../../models/Actor/delete-response';
+import { CreateActorDto } from '../../models/Actor/updateActorDto';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class ActorService {
+
+  private _baseUrl = 'https://localhost:44324/api';
+
+  private http = inject(HttpClient);
+  constructor() { }
+
+  getActores(): Observable<ActoresResponse> {
+    return this.http.get<ActoresResponse>(
+      `${this._baseUrl}/actores/getActores`
+    );
+  }
+
+  getActorById(id: string): Observable<ActorResponse> {
+    return this.http.get<ActorResponse>(
+      `${this._baseUrl}/actores/getActorById/${id}`
+    );
+  }
+
+  createActor(createActor: CreateActorDto): Observable<CreateResponse> {
+    return this.http.post<CreateResponse>(
+      `${this._baseUrl}/actores`,
+      createActor
+    );
+  }
+
+  updateActor(id: string, updateActor: CreateActorDto): Observable<EditResponse> {
+    return this.http.put<EditResponse>(
+      `${this._baseUrl}/actores/updateActor/${id}`,
+      updateActor
+    );
+  }
+
+  deleteActor(id: string): Observable<DeleteResponse> {
+    return this.http.put<DeleteResponse>(
+      `${this._baseUrl}/actores/deleteActor/${id}`,
+      {} 
+    );
+  }
+}

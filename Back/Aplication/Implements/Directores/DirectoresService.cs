@@ -29,7 +29,7 @@ namespace Aplication.Implements.Directores
             {
                 if (directorDictionary.TryGetValue(directorDto.DirectorId, out var directorOriginal))
                 {
-                    directorDto.PeliculasTitulo = directorOriginal.Peliculas.Select(p => p.Titulo).ToList();
+                    directorDto.PeliculasTitulo = directorOriginal.PeliculasDirectores.Select(p => p.Pelicula.Titulo).ToList();
                 }
             }
 
@@ -40,7 +40,8 @@ namespace Aplication.Implements.Directores
         {
             var result = await _directoresRepository.GetDirectorById(id);
             var directorMapped = AutoMapperConfig.GetMapper<Directore, GetDirectorDto>().Map<GetDirectorDto>(result);
-            var peliculasTitulo = result.Peliculas.Select(p => p.Titulo).ToList();
+
+            var peliculasTitulo = result.PeliculasDirectores.Select(p => p.Pelicula.Titulo).ToList();
 
             directorMapped.PeliculasTitulo = peliculasTitulo;
 

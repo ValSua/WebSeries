@@ -1,0 +1,34 @@
+<!-- actores.component.html -->
+<div class="container">
+    <h2>Gestión de Actores</h2>
+    
+    <div *ngIf="isLoading()">
+      <p>Cargando datos...</p>
+    </div>
+    
+    <table *ngIf="!isLoading() && actores().length > 0" class="table table-striped">
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Apellido</th>
+          <th>País</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let actor of actores()">
+          <td>{{ actor.nombre }}</td>
+          <td>{{ actor.apellido }}</td>
+          <td>{{ actor.paisNombre }}</td>
+          <td>
+            <button class="btn btn-primary btn-sm" (click)="openActorEdit(actor.actorId)">Editar</button>
+            <button class="btn btn-danger btn-sm ms-2" (click)="eliminarActor(actor.actorId)">Eliminar</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    
+    <div *ngIf="!isLoading() && actores().length === 0">
+      <p>No hay actores disponibles.</p>
+    </div>
+  </div>

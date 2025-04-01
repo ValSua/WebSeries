@@ -1,0 +1,58 @@
+<!-- actores.component.html -->
+<div class="container">
+
+    <h2> 
+
+
+        
+    </h2>
+    <!-- Formulario de edición -->
+
+      <div class="card mb-4">
+        <div class="card-header">
+          <h3>Editar Actor</h3>
+        </div>
+        <div class="card-body">
+          <form (ngSubmit)="guardarCambios()">
+            <div class="mb-3">
+              <label for="nombre" class="form-label">Nombre</label>
+              <input 
+                type="text" 
+                class="form-control" 
+                id="nombre" 
+                name="nombre" 
+                required
+              >
+            </div>
+            <div class="mb-3">
+              <label for="apellido" class="form-label">Apellido</label>
+              <input 
+                type="text" 
+                class="form-control" 
+                id="apellido" 
+                name="apellido" 
+                required
+              >
+            </div>
+            <div class="mb-3">
+              <label for="paisId" class="form-label">País</label>
+              <select 
+                class="form-select" 
+                id="paisId" 
+                name="paisId" 
+                required
+              >
+                <option value="">-- Seleccionar País --</option>
+                <!-- @for (pais of paises(); track pais.id) {
+                  <option [value]="pais.id">{{ pais.nombre }}</option>
+                } -->
+              </select>
+            </div>
+            <div class="d-flex gap-2">
+              <button type="submit" class="btn btn-success">Guardar</button>
+              <button type="button" class="btn btn-secondary">Cancelar</button>
+            </div>
+          </form>
+        </div>
+      </div>
+  </div>

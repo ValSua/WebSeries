@@ -21,7 +21,8 @@ namespace Infrastructure.Implements.Directores
             return await _context.Directores
                         .Where(a => !a.IsDeleted)
                         .Include(a => a.Pais)
-                        .Include(a => a.Peliculas)
+                        .Include(a => a.PeliculasDirectores)
+                            .ThenInclude(pa => pa.Pelicula)
                         .ToListAsync();
         }
 
@@ -29,7 +30,8 @@ namespace Infrastructure.Implements.Directores
         {
             var director = await _context.Directores
                               .Include(a => a.Pais)
-                              .Include(a => a.Peliculas)
+                              .Include(a => a.PeliculasDirectores)
+                                 .ThenInclude(pa => pa.Pelicula)
                               .FirstOrDefaultAsync(a => a.DirectorId == id);
 
             if (director == null)
@@ -86,13 +88,24 @@ namespace Infrastructure.Implements.Directores
 
         public async Task<bool> DeleteDirector(long id)
         {
-            var director = await _context.Directores.FindAsync(id);
+            var director = await _context.Directores
+                .FirstOrDefaultAsync(p => p.DirectorId == id);
+
             if (director == null)
             {
                 return false;
             }
 
             director.IsDeleted = true;
+
+            var relacionesDirectores = _context.PeliculasDirectores
+                .Where(pa => pa.DirectorId == id)
+                .ToList();
+
+            foreach (var relacion in relacionesDirectores)
+            {
+                relacion.IsDeleted = true;
+            }
 
             try
             {

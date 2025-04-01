@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace WebSeries.Models;
+﻿namespace WebSeries.Models;
 
 public partial class PeliculasActore
 {
@@ -11,4 +8,7 @@ public partial class PeliculasActore
 
     public bool IsDeleted { get; set; }
 
+    public virtual Actore Actor { get; set; } = null!;
+
+    public virtual Pelicula Pelicula { get; set; } = null!;
 }

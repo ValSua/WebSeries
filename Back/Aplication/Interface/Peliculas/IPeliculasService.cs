@@ -6,5 +6,8 @@ namespace Aplication.Interface.Peliculas
     {
         Task<IEnumerable<GetPeliculaDto>> GetPeliculas();
         Task<GetPeliculaDto> GetPeliculaById(long id);
+        Task<bool> UpdatePelicula(long id, CreatePeliculaDto updatePeliculaDto);
+        Task<CreatePeliculaDto> CreatePelicula(CreatePeliculaDto createPeliculaDto);
+        Task<bool> DeletePelicula(long id);
     }
 }

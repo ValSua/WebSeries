@@ -24,6 +24,10 @@ public partial class ProjectDbContext : DbContext
 
     public virtual DbSet<Pelicula> Peliculas { get; set; }
 
+    public virtual DbSet<PeliculasActore> Peliculas_Actores { get; set; }
+
+    public virtual DbSet<PeliculasDirectore> PeliculasDirectores { get; set; }
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         => optionsBuilder.UseSqlServer("Name=ConnectionStrings:DefaultConnection");
 
@@ -86,40 +90,38 @@ public partial class ProjectDbContext : DbContext
                 .HasForeignKey(d => d.PaisId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Peliculas_Paises");
+        });
 
-            entity.HasMany(d => d.Directors).WithMany(p => p.Peliculas)
-               .UsingEntity<Dictionary<string, object>>(
-                   "PeliculasDirectore",
-                   r => r.HasOne<Directore>().WithMany()
-                       .HasForeignKey("DirectorId")
-                       .OnDelete(DeleteBehavior.ClientSetNull)
-                       .HasConstraintName("FK__Peliculas__Direc__6E01572D"),
-                   l => l.HasOne<Pelicula>().WithMany()
-                       .HasForeignKey("PeliculaId")
-                       .OnDelete(DeleteBehavior.ClientSetNull)
-                       .HasConstraintName("FK__Peliculas__Pelic__6D0D32F4"),
-                   j =>
-                   {
-                       j.HasKey("PeliculaId", "DirectorId").HasName("PK__Pelicula__28AA95283CE263F9");
-                       j.ToTable("Peliculas_Directores");
-                   });
+        modelBuilder.Entity<PeliculasActore>(entity =>
+        {
+            entity.HasKey(e => new { e.PeliculaId, e.ActorId }).HasName("PK__Pelicula__FFBDC2687A272305");
 
-            entity.HasMany(d => d.Actors).WithMany(p => p.Peliculas)
-                .UsingEntity<Dictionary<string, object>>(
-                    "PeliculasActore",
-                    r => r.HasOne<Actore>().WithMany()
-                        .HasForeignKey("ActorId")
-                        .OnDelete(DeleteBehavior.ClientSetNull)
-                        .HasConstraintName("FK__Peliculas__Actor__59063A47"),
-                    l => l.HasOne<Pelicula>().WithMany()
-                        .HasForeignKey("PeliculaId")
-                        .OnDelete(DeleteBehavior.ClientSetNull)
-                        .HasConstraintName("FK__Peliculas__Pelic__5812160E"),
-                    j =>
-                    {
-                        j.HasKey("PeliculaId", "ActorId").HasName("PK__Pelicula__FFBDC2687A272305");
-                        j.ToTable("Peliculas_Actores");
-                    });
+            entity.ToTable("Peliculas_Actores");
+
+            entity.HasOne(d => d.Actor).WithMany(p => p.PeliculasActores)
+                .HasForeignKey(d => d.ActorId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__Peliculas__Actor__59063A47");
+
+            entity.HasOne(d => d.Pelicula).WithMany(p => p.PeliculasActores)
+                .HasForeignKey(d => d.PeliculaId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__Peliculas__Pelic__5812160E");
+        });
+
+        modelBuilder.Entity<PeliculasDirectore>(entity =>
+        {
+            entity.HasKey(e => new { e.PeliculaId, e.DirectorId }).HasName("PK__Pelicula__28AA95283CE263F9");
+
+            entity.ToTable("Peliculas_Directores");
+
+            entity.HasOne(d => d.Director).WithMany(p => p.PeliculasDirectores)
+                .HasForeignKey(d => d.DirectorId)
+                .HasConstraintName("FK__Peliculas__Direc__6E01572D");
+
+            entity.HasOne(d => d.Pelicula).WithMany(p => p.PeliculasDirectores)
+                .HasForeignKey(d => d.PeliculaId)
+                .HasConstraintName("FK__Peliculas__Pelic__6D0D32F4");
         });
 
         OnModelCreatingPartial(modelBuilder);

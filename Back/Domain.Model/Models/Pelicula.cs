@@ -21,6 +21,8 @@ public partial class Pelicula
     public virtual Genero Genero { get; set; } = null!;
 
     public virtual Paise Pais { get; set; } = null!;
-    public virtual ICollection<Directore> Directors { get; set; } = new List<Directore>();
-    public virtual ICollection<Actore> Actors { get; set; } = new List<Actore>();
+
+    public virtual ICollection<PeliculasActore> PeliculasActores { get; set; } = new List<PeliculasActore>();
+
+    public virtual ICollection<PeliculasDirectore> PeliculasDirectores { get; set; } = new List<PeliculasDirectore>();
 }

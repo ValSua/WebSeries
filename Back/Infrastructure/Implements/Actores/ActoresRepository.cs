@@ -17,18 +17,27 @@ namespace Infrastructure.Implements.Actores
 
         public async Task<IEnumerable<Actore>> GetActores()
         {
-            return await _context.Actores
-                        .Where(a => !a.IsDeleted)
-                        .Include(a => a.Pais)
-                        .Include(a => a.Peliculas)
-                        .ToListAsync();
+            try {
+                var actores = await _context.Actores
+                            .Where(a => !a.IsDeleted)
+                            .Include(a => a.Pais)
+                            .Include(a => a.PeliculasActores)
+                                .ThenInclude(pa => pa.Pelicula)
+                            .ToListAsync();
+                return actores;
+            }catch(Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+            
         }
 
         public async Task<Actore> GetActorById(long id)
         {
             var actor = await _context.Actores
                               .Include(a => a.Pais)
-                              .Include(a => a.Peliculas)
+                              .Include(a => a.PeliculasActores)
+                                  .ThenInclude(pa => pa.Pelicula)
                               .FirstOrDefaultAsync(a => a.ActorId == id);
 
             if (actor == null)
@@ -86,13 +95,24 @@ namespace Infrastructure.Implements.Actores
 
         public async Task<bool> DeleteActor(long id)
         {
-            var actor = await _context.Actores.FindAsync(id);
+            var actor = await _context.Actores
+                .FirstOrDefaultAsync(p => p.ActorId == id);
+
             if (actor == null)
             {
                 return false;
             }
 
             actor.IsDeleted = true;
+
+            var relacionesActores = _context.Peliculas_Actores
+                .Where(pa => pa.ActorId == id)
+                .ToList();
+
+            foreach (var relacion in relacionesActores)
+            {
+                relacion.IsDeleted = true;
+            }
 
             try
             {

@@ -20,7 +20,6 @@ namespace Aplication.Implements.Actores
 
             var actorMapped = AutoMapperConfig.GetMapper<Actore, GetActorDto>().Map<IEnumerable<GetActorDto>>(result);
 
-            // Crear un diccionario para acceso rápido por ActorId
             var actorDictionary = result.ToDictionary(a => a.ActorId);
 
             // Asignar títulos de películas de manera eficiente
@@ -28,7 +27,7 @@ namespace Aplication.Implements.Actores
             {
                 if (actorDictionary.TryGetValue(actorDto.ActorId, out var actorOriginal))
                 {
-                    actorDto.PeliculasTitulo = actorOriginal.Peliculas.Select(p => p.Titulo).ToList();
+                    actorDto.PeliculasTitulo = actorOriginal.PeliculasActores.Select(p => p.Pelicula.Titulo).ToList();
                 }
             }
 
@@ -38,8 +37,10 @@ namespace Aplication.Implements.Actores
         public async Task<GetActorDto> GetActorById(long id)
         {
             var result = await _actoresRepository.GetActorById(id);
+
             var actorMapped = AutoMapperConfig.GetMapper<Actore, GetActorDto>().Map<GetActorDto>(result);
-            var peliculasTitulo = result.Peliculas.Select(p => p.Titulo).ToList();
+
+            var peliculasTitulo = result.PeliculasActores.Select(p => p.Pelicula.Titulo).ToList();
 
             actorMapped.PeliculasTitulo = peliculasTitulo;
 
@@ -60,7 +61,6 @@ namespace Aplication.Implements.Actores
             var actorMapped = AutoMapperConfig.GetMapper<CreateActorDto, Actore>().Map<Actore>(createActoreDto);
 
             var result = await _actoresRepository.CreateActor(actorMapped);
-
 
             return result;
         }
