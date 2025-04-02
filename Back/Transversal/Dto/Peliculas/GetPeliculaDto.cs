@@ -55,12 +55,12 @@ namespace Transversal.Dto.Peliculas
         public string Titulo { get; set; } = null!;
 
         /// <summary>
-        /// Gets or sets the reseña.
+        /// Gets or sets the resena.
         /// </summary>
         /// <value>
-        /// The reseña.
+        /// The resena.
         /// </value>
-        public string? Reseña { get; set; }
+        public string? Resena { get; set; }
 
         /// <summary>
         /// Gets or sets the imagen portada.

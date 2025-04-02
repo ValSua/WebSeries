@@ -1,17 +1,18 @@
-import { Component, signal, WritableSignal } from '@angular/core';
+import { Component, OnInit, signal, WritableSignal } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { DeleteResponse } from '../../../models/Actor/delete-response';
 import { DirectorService } from '../../../services/director/director.service';
 import { GetDirectorDto } from '../../../models/Director/getDirectorDto';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-directores',
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './directores.component.html',
   styleUrl: './directores.component.css'
 })
-export class DirectoresComponent {
+export class DirectoresComponent implements OnInit{
 
   edithPath = 'editDirector';
   createPath = 'createDirector';

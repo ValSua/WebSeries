@@ -1,15 +1,14 @@
-import { Genero } from "../Genero/genero";
-import { Pais } from "../Pais/pais";
-
-export interface Pelicula {
+export interface GetPeliculaDto {
     peliculaId: number;
     generoId: number;
+    generoNombre: string;
     paisId: number;
+    paisNombre: string;
     titulo: string;
-    reseña?: string;
+    resena?: string;
     imagenPortada?: string;
     codigoTrailer?: string;
     isDeleted: boolean;
-    genero: Genero;
-    pais: Pais;
+    directors: string[] ;
+    actors: string[] ;
   }

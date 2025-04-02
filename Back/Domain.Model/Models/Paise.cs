@@ -5,6 +5,7 @@ public partial class Paise
     public long PaisId { get; set; }
 
     public string Nombre { get; set; } = null!;
+    public bool IsDeleted { get; set; }
 
     public virtual ICollection<Actore> Actores { get; set; } = new List<Actore>();
 

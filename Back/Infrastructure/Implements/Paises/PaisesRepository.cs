@@ -18,6 +18,7 @@ namespace Infrastructure.Implements.Paises
         public async Task<IEnumerable<Paise>> GetPaises()
         {
             return await _context.Paises
+                        .Where(a => !a.IsDeleted)
                         .ToListAsync();
         }
 
@@ -65,25 +66,27 @@ namespace Infrastructure.Implements.Paises
             return _context.Paises.Any(e => e.PaisId == id);
         }
 
-        public async Task<CreatePaisDto> CreatePais(Paise genero)
+        public async Task<CreatePaisDto> CreatePais(Paise pais)
         {
-            _context.Paises.Add(genero);
+            _context.Paises.Add(pais);
             await _context.SaveChangesAsync();
 
             return new CreatePaisDto
             {
-                PaisId = genero.PaisId,
-                Nombre = genero.Nombre
+                PaisId = pais.PaisId,
+                Nombre = pais.Nombre
             };
         }
 
         public async Task<bool> DeletePais(long id)
         {
-            var genero = await _context.Paises.FindAsync(id);
-            if (genero == null)
+            var pais = await _context.Paises.FindAsync(id);
+            if (pais == null)
             {
                 return false;
             }
+
+            pais.IsDeleted = true;
 
             try
             {

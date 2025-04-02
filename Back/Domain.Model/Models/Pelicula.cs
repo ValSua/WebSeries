@@ -10,7 +10,7 @@ public partial class Pelicula
 
     public string Titulo { get; set; } = null!;
 
-    public string? Reseña { get; set; }
+    public string? Resena { get; set; }
 
     public string? ImagenPortada { get; set; }
 

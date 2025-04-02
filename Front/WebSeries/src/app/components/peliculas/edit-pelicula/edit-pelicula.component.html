@@ -1,1 +1,119 @@
-<p>edit-pelicula works!</p>
+<head>
+    <link rel="stylesheet" href="edit-pelicula.component.css">
+</head>
+
+<div class="container">
+    <div class="card mb-4">
+        <div class="card-header">
+            <h3>Editar Pelicula</h3>
+        </div>
+        <div class="card-body">
+            <!-- Mostrar estado de carga o error -->
+            <div *ngIf="loading" class="text-info">Cargando datos de la pelicula...</div>
+            <div *ngIf="error" class="text-danger">{{ error }}</div>
+
+            <!-- Mostrar formulario si hay datos -->
+            <div *ngIf="pelicula && !loading && !error">
+                <form #peliculaForm="ngForm" (ngSubmit)="guardarCambios()" novalidate>
+                    <div class="mb-3">
+                        <label for="titulo" class="form-label">Titulo</label>
+                        <input type="text" class="form-control" id="titulo" name="titulo"
+                            [(ngModel)]="createPelicula.titulo" #titulo="ngModel" required
+                            [ngClass]="{'is-invalid': titulo.invalid && (titulo.dirty || titulo.touched)}" />
+                        <div *ngIf="titulo.invalid && (titulo.dirty || titulo.touched)" class="invalid-feedback">
+                            El titulo es obligatorio.
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="generoId" class="form-label">Género</label>
+                        <select class="form-select" id="generoId" name="generoId" [(ngModel)]="createPelicula.generoId"
+                            #generoId="ngModel" required
+                            [ngClass]="{'is-invalid': generoId.invalid && (generoId.dirty || generoId.touched)}">
+                            <option value="" disabled>-- Seleccionar País --</option>
+                            <option *ngFor="let genero of generos()" [value]="genero.generoId">
+                                {{ genero.nombre }}
+                            </option>
+                        </select>
+                        <div *ngIf="generoId.invalid && (generoId.dirty || generoId.touched)" class="invalid-feedback">
+                            Debes seleccionar un genero.
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="resena" class="form-label">Reseña</label>
+                        <input type="text" class="form-control" id="resena" name="resena"
+                            [(ngModel)]="createPelicula.resena" #resena="ngModel" required
+                            [ngClass]="{'is-invalid': resena.invalid && (resena.dirty || resena.touched)}" />
+                        <div *ngIf="resena.invalid && (resena.dirty || resena.touched)" class="invalid-feedback">
+                            La resena es obligatoria.
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="imagenPortada" class="form-label">Imagen Portada</label>
+                        <input type="text" class="form-control" id="imagenPortada" name="imagenPortada"
+                            [(ngModel)]="createPelicula.imagenPortada" #imagenPortada="ngModel" required
+                            [ngClass]="{'is-invalid': imagenPortada.invalid && (imagenPortada.dirty || imagenPortada.touched)}" />
+                        <div *ngIf="imagenPortada.invalid && (imagenPortada.dirty || imagenPortada.touched)"
+                            class="invalid-feedback">
+                            La imagen de portada es obligatoria.
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="codigoTrailer" class="form-label">Trailer</label>
+                        <input type="text" class="form-control" id="codigoTrailer" name="codigoTrailer"
+                            [(ngModel)]="createPelicula.codigoTrailer" #codigoTrailer="ngModel" required
+                            [ngClass]="{'is-invalid': codigoTrailer.invalid && (codigoTrailer.dirty || codigoTrailer.touched)}" />
+                        <div *ngIf="codigoTrailer.invalid && (codigoTrailer.dirty || codigoTrailer.touched)"
+                            class="invalid-feedback">
+                            El trailer es obligatorio.
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="paisId" class="form-label">País</label>
+                        <select class="form-select" id="paisId" name="paisId" [(ngModel)]="createPelicula.paisId"
+                            #paisId="ngModel" required
+                            [ngClass]="{'is-invalid': paisId.invalid && (paisId.dirty || paisId.touched)}">
+                            <option value="" disabled>-- Seleccionar País --</option>
+                            <option *ngFor="let pais of paises()" [value]="pais.paisId">
+                                {{ pais.nombre }}
+                            </option>
+                        </select>
+                        <div *ngIf="paisId.invalid && (paisId.dirty || paisId.touched)" class="invalid-feedback">
+                            Debes seleccionar un país.
+                        </div>
+                    </div>
+
+                    <p-multiselect [options]="actores()" [(ngModel)]="createPelicula.actors" name="actoresSelect"
+                        optionLabel="nombre" optionValue="actorId" placeholder="Seleccionar Actores"
+                        [maxSelectedLabels]="3" styleClass="w-full md:w-80">
+                    </p-multiselect>
+
+                    <div class="mb-3">
+                        <label for="directors" class="form-label">Directores</label>
+                        <select class="form-select" id="directors" name="directors"
+                            [(ngModel)]="createPelicula.directors" #directors="ngModel" required
+                            [ngClass]="{'is-invalid': directors.invalid && (directors.dirty || directors.touched)}">
+                            <option value="" disabled>-- Seleccionar País --</option>
+                            <option *ngFor="let director of directores()" [value]="director.directorId">
+                                {{ director.nombre }}
+                            </option>
+                        </select>
+                        <div *ngIf="directors.invalid && (directors.dirty || directors.touched)"
+                            class="invalid-feedback">
+                            Debes seleccionar un país.
+                        </div>
+                    </div>
+
+                    <div class="d-flex gap-2">
+                        <button type="submit" class="btn btn-success" [disabled]="peliculaForm.invalid">Guardar</button>
+                        <button type="button" class="btn btn-secondary" (click)="cancelar()">Cancelar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

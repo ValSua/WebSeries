@@ -10,9 +10,15 @@ import { CreateActorComponent } from './components/actores/create-actor/create-a
 import { PaisesComponent } from './components/paises/list-paises/paises.component';
 import { CreateDirectorComponent } from './components/directores/create-director/create-director.component';
 import { EditDirectorComponent } from './components/directores/edit-director/edit-director.component';
+import { CreateGeneroComponent } from './components/generos/create-genero/create-genero.component';
+import { EditGeneroComponent } from './components/generos/edit-genero/edit-genero.component';
+import { CreatePaisComponent } from './components/paises/create-pais/create-pais.component';
+import { EditPaisComponent } from './components/paises/edit-pais/edit-pais.component';
+import { CreatePeliculaComponent } from './components/peliculas/create-pelicula/create-pelicula.component';
+import { EditPeliculaComponent } from './components/peliculas/edit-pelicula/edit-pelicula.component';
 
 export const routes: Routes = [
-    {path: '', redirectTo: 'login', pathMatch: 'full'},
+    {path: '', redirectTo: 'home_page', pathMatch: 'full'},
     {path: 'login', component: LoginComponent},
     {path: 'home_page', component: HomePageComponent},
     {path: 'actores', component: ActoresComponent},
@@ -22,8 +28,14 @@ export const routes: Routes = [
     {path: 'createDirector', component: CreateDirectorComponent},
     {path: 'editDirector/:id', component: EditDirectorComponent},
     {path: 'generos', component: GenerosComponent},
+    {path: 'createGenero', component: CreateGeneroComponent},
+    {path: 'editGenero/:id', component: EditGeneroComponent},
     {path: 'paises', component: PaisesComponent},
+    {path: 'editPais/:id', component: EditPaisComponent},
+    {path: 'createPais', component: CreatePaisComponent},
     {path: 'peliculas', component: PeliculasComponent},
+    {path: 'createPelicula', component: CreatePeliculaComponent},
+    {path: 'editPelicula/:id', component: EditPeliculaComponent},
     {path: '**', component: LoginComponent},
 
 ];

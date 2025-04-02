@@ -3,7 +3,6 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { Router, ActivatedRoute, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { GetActorDto } from '../../../models/Actor/getActorDto';
 import { CreateActorDto } from '../../../models/Actor/updateActorDto';
 import { Pais } from '../../../models/Pais/pais';
 import { ActorService } from '../../../services/actor/actor.service';
