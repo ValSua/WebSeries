@@ -1,103 +1,66 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using WebSeries.Data;
-using WebSeries.Models;
+﻿using Aplication.Interface.Directores;
+using Microsoft.AspNetCore.Mvc;
+using Transversal.Dto.Actores;
+using Transversal.Dto.Directores;
+using Transversal.Helpers;
 
 namespace WebSeries.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
     public class DirectoresController : ControllerBase
     {
-        private readonly ProjectDbContext _context;
+        // <summary>
+        /// The directores service
+        /// </summary>
+        private readonly IDirectoresService _directoresService;
 
-        public DirectoresController(ProjectDbContext context)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DirectoresController"/> class.
+        /// </summary>
+        /// <param name="directoresService">The directores service.</param>
+        public DirectoresController(IDirectoresService directoresService)
         {
-            _context = context;
+            _directoresService = directoresService;
         }
 
-        // GET: api/Directores
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<Directore>>> GetDirectores()
-        {
-            return await _context.Directores.ToListAsync();
-        }
+        /// <summary>
+        /// Gets the directores.
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet(RoutesPath.Directores.GetDirectores)]
+        public async Task<IEnumerable<GetDirectorDto>> GetDirectores() => await _directoresService.GetDirectores();
 
-        // GET: api/Directores/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Directore>> GetDirectore(long id)
-        {
-            var directore = await _context.Directores.FindAsync(id);
+        /// <summary>
+        /// Gets the director by identifier.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns></returns>
+        [HttpGet(RoutesPath.Directores.GetDirectorById)]
+        public async Task<GetDirectorDto> GetDirectorById(long id) => await _directoresService.GetDirectorById(id);
 
-            if (directore == null)
-            {
-                return NotFound();
-            }
+        /// <summary>
+        /// Updates the director.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <param name="directore">The directore.</param>
+        /// <returns></returns>
+        [HttpPut(RoutesPath.Directores.UpdateDirector)]
+        public async Task<bool> UpdateDirector(long id, CreateDirectorDto updateDirectoreDto) => await _directoresService.UpdateDirector(id, updateDirectoreDto);
 
-            return directore;
-        }
+        /// <summary>
+        /// Creates the director.
+        /// </summary>
+        /// <param name="createDirectoreDto">The create directore dto.</param>
+        /// <returns></returns>
+        [HttpPost(RoutesPath.Directores.CreateDirector)]
+        public async Task<CreateDirectorDto> CreateDirector(CreateDirectorDto createDirectoreDto) => await _directoresService.CreateDirector(createDirectoreDto);
 
-        // PUT: api/Directores/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutDirectore(long id, Directore directore)
-        {
-            if (id != directore.DirectorId)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(directore).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!DirectoreExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
-        }
-
-        // POST: api/Directores
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public async Task<ActionResult<Directore>> PostDirectore(Directore directore)
-        {
-            _context.Directores.Add(directore);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetDirectore", new { id = directore.DirectorId }, directore);
-        }
-
-        // DELETE: api/Directores/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteDirectore(long id)
-        {
-            var directore = await _context.Directores.FindAsync(id);
-            if (directore == null)
-            {
-                return NotFound();
-            }
-
-            _context.Directores.Remove(directore);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
-        }
-
-        private bool DirectoreExists(long id)
-        {
-            return _context.Directores.Any(e => e.DirectorId == id);
-        }
+        /// <summary>
+        /// Deletes the actor.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns></returns>
+        [HttpPut(RoutesPath.Directores.DeleteDirector)]
+        public async Task<bool> DeleteDirector(long id) => await _directoresService.DeleteDirector(id);
     }
 }

@@ -1,103 +1,65 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using WebSeries.Data;
-using WebSeries.Models;
+﻿using Aplication.Interface.Paises;
+using Microsoft.AspNetCore.Mvc;
+using Transversal.Dto.Paises;
+using Transversal.Helpers;
 
 namespace WebSeries.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
     public class PaisesController : ControllerBase
     {
-        private readonly ProjectDbContext _context;
+        /// <summary>
+        /// The paises service
+        /// </summary>
+        private readonly IPaisesService _paisesService;
 
-        public PaisesController(ProjectDbContext context)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PaisesController"/> class.
+        /// </summary>
+        /// <param name="paisesService">The paises service.</param>
+        public PaisesController(IPaisesService paisesService)
         {
-            _context = context;
+            _paisesService = paisesService;
         }
 
-        // GET: api/Paises
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<Paise>>> GetPaises()
-        {
-            return await _context.Paises.ToListAsync();
-        }
+        /// <summary>
+        /// Gets the paises.
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet(RoutesPath.Paises.GetPaises)]
+        public async Task<IEnumerable<GetPaisDto>> GetPaises() => await _paisesService.GetPaises();
 
-        // GET: api/Paises/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Paise>> GetPaise(long id)
-        {
-            var paise = await _context.Paises.FindAsync(id);
+        /// <summary>
+        /// Gets the pais by identifier.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns></returns>
+        [HttpGet(RoutesPath.Paises.GetPaisById)]
+        public async Task<GetPaisDto> GetPaisById(long id) => await _paisesService.GetPaisById(id);
 
-            if (paise == null)
-            {
-                return NotFound();
-            }
+        /// <summary>
+        /// Updates the pais.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <param name="pais">The pais.</param>
+        /// <returns></returns>
+        [HttpPut(RoutesPath.Paises.UpdatePais)]
+        public async Task<bool> UpdatePais(long id, CreatePaisDto updatePaisDto) => await _paisesService.UpdatePais(id, updatePaisDto);
 
-            return paise;
-        }
+        /// <summary>
+        /// Creates the pais.
+        /// </summary>
+        /// <param name="createActoreDto">The create pais dto.</param>
+        /// <returns></returns>
+        [HttpPost(RoutesPath.Paises.CreatePais)]
+        public async Task<CreatePaisDto> CreatePais(CreatePaisDto createPaisDto) => await _paisesService.CreatePais(createPaisDto);
 
-        // PUT: api/Paises/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutPaise(long id, Paise paise)
-        {
-            if (id != paise.PaisId)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(paise).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!PaiseExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
-        }
-
-        // POST: api/Paises
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public async Task<ActionResult<Paise>> PostPaise(Paise paise)
-        {
-            _context.Paises.Add(paise);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetPaise", new { id = paise.PaisId }, paise);
-        }
-
-        // DELETE: api/Paises/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeletePaise(long id)
-        {
-            var paise = await _context.Paises.FindAsync(id);
-            if (paise == null)
-            {
-                return NotFound();
-            }
-
-            _context.Paises.Remove(paise);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
-        }
-
-        private bool PaiseExists(long id)
-        {
-            return _context.Paises.Any(e => e.PaisId == id);
-        }
+        /// <summary>
+        /// Deletes the pais.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns></returns>
+        [HttpPut(RoutesPath.Paises.DeletePais)]
+        public async Task<bool> DeletePais(long id) => await _paisesService.DeletePais(id);
     }
 }
