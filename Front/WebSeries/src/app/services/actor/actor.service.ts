@@ -37,8 +37,8 @@ export class ActorService {
     );
   }
 
-  updateActor(id: string, updateActor: CreateActorDto): Observable<EditResponse> {
-    return this.http.put<EditResponse>(
+  updateActor(id: string, updateActor: CreateActorDto): Observable<any> {
+    return this.http.put(
       `${this._baseUrl}/actores/updateActor/${id}`,
       updateActor
     );

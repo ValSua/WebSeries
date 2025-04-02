@@ -3,19 +3,20 @@ import { ActorService } from '../../../services/actor/actor.service';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { Router, ActivatedRoute, RouterModule } from '@angular/router';
 import { GetActorDto } from '../../../models/Actor/getActorDto';
-import { ActorResponse } from '../../../models/Actor/actor-response';
 import { FormsModule } from '@angular/forms';
-import { BrowserModule } from '@angular/platform-browser';
-import { CommonModule } from '@angular/common'; // Para NgIf, NgFor, etc.
+import { CommonModule } from '@angular/common';
+import { PaisService } from '../../../services/pais/pais.service';
+import { Pais } from '../../../models/Pais/pais';
+import { CreateActorDto } from '../../../models/Actor/updateActorDto';
 
 @Component({
   selector: 'app-edit-actor',
-  standalone: true, // Indica que es un componente standalone
+  standalone: true,
   imports: [
-    CommonModule, // Reemplaza BrowserModule
-    FormsModule,  // Para ngModel
-    RouterModule, // Para router y ActivatedRoute
-    MatDialogModule // Si usas MatDialog
+    CommonModule,
+    FormsModule,
+    RouterModule,
+    MatDialogModule
   ],
   templateUrl: './edit-actor.component.html',
   styleUrls: ['./edit-actor.component.css']
@@ -25,39 +26,52 @@ export class EditActorComponent implements OnInit {
   listPath = 'actores';
   error: string | null = null;
   actor: GetActorDto | null = null;
+  actorId!: string;
+  createActor!: CreateActorDto;
 
   constructor(
     public actorService: ActorService,
     public dialog: MatDialog,
     private router: Router,
-    private route: ActivatedRoute
-  ) {}
+    private route: ActivatedRoute,
+    public paisService: PaisService,
+  ) { }
 
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
+      this.actorId = id;
       this.getActorById(id);
     } else {
       this.error = 'ID del actor no proporcionado';
       this.loading = false;
       this.isLoading.set(false);
     }
+    this.getPaises();
   }
 
+  public paises: WritableSignal<Pais[]> = signal([]);
   isLoading: WritableSignal<boolean> = signal(true);
 
   getActorById(id: string): void {
     this.loading = true;
     this.error = null;
-    console.log('Haciendo solicitud para ID:', id);
 
     this.actorService.getActorById(id).subscribe({
       next: (response: GetActorDto) => {
-        console.log('Respuesta del servicio:', response);
-        this.actor = response; // Asigna directamente la respuesta
+        this.actor = response;
+
+        this.actorId = response.actorId.toString();
+
+        this.createActor = {
+          actorId: response.actorId,
+          nombre: response.nombre,
+          apellido: response.apellido,
+          paisId: response.paisId
+        };
+
         this.loading = false;
         this.isLoading.set(false);
-        console.log('Actor asignado:', this.actor);
       },
       error: (err) => {
         if (err.status === 404) {
@@ -69,14 +83,41 @@ export class EditActorComponent implements OnInit {
         this.isLoading.set(false);
         console.error('Error en la solicitud:', err);
       },
-      complete: () => {
-        console.log('Carga completada');
+    });
+  }
+
+  getPaises() {
+    this.paisService.getPaises().subscribe({
+      next: (response: any) => {
+        const paisesArray: Pais[] = Array.isArray(response) ? response : [];
+
+        this.paises.set(paisesArray);
+        this.isLoading.set(false);
+      },
+      error: (err) => {
+        console.error('Error al obtener los paises', err);
+        this.isLoading.set(false);
+        this.paises.set([]);
       }
     });
   }
 
-  guardarCambios() {
-    console.log('Datos a guardar:', this.actor);
+  guardarCambios() {//
+    if (!this.actorId) {   
+      this.error = 'ID del actor no válido.';
+      return;
+    }
+
+    this.actorService.updateActor(this.actorId, this.createActor).subscribe({
+      next: () => {
+        alert('Actor actualizado correctamente');
+        this.router.navigate(['/actores']);
+      },
+      error: (err) => {
+        this.error = 'Error al actualizar el actor.';
+        console.error(err);
+      },
+    });
   }
 
   cancelar() {

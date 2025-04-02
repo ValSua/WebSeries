@@ -16,6 +16,8 @@ import { DeleteResponse } from '../../../models/Actor/delete-response';
 export class ActoresComponent implements OnInit {
 
   edithPath = 'editActor';
+  createPath = 'createActor';
+
   constructor(public actorService: ActorService, public dialog: MatDialog, private router: Router,
   ) {
 
@@ -48,6 +50,10 @@ export class ActoresComponent implements OnInit {
 
   openActorEdit(id: number) {
     this.router.navigate([this.edithPath, id]);
+  }
+
+  openActorCreate() {
+    this.router.navigate([this.createPath]);
   }
 
   eliminarActor(id: number) {

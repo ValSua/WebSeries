@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ActoresResponse } from '../../models/Actor/actores-response';
+import { PaisesResponse } from '../../models/Pais/paises-response';
 
 @Injectable({
   providedIn: 'root'
@@ -13,9 +13,9 @@ export class PaisService {
   private http = inject(HttpClient);
   constructor() { }
 
-  getPaises(): Observable<ActoresResponse> {
-    return this.http.get<ActoresResponse>(
-      `${this._baseUrl}/actores/getActores`
+  getPaises(): Observable<PaisesResponse> {
+    return this.http.get<PaisesResponse>(
+      `${this._baseUrl}/paises/getPaises`
     );
   }
   
