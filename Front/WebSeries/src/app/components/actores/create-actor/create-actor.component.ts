@@ -3,11 +3,11 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { Router, ActivatedRoute, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { GetActorDto } from '../../../../models/Actor/getActorDto';
-import { CreateActorDto } from '../../../../models/Actor/updateActorDto';
-import { Pais } from '../../../../models/Pais/pais';
-import { ActorService } from '../../../../services/actor/actor.service';
-import { PaisService } from '../../../../services/pais/pais.service';
+import { GetActorDto } from '../../../models/Actor/getActorDto';
+import { CreateActorDto } from '../../../models/Actor/updateActorDto';
+import { Pais } from '../../../models/Pais/pais';
+import { ActorService } from '../../../services/actor/actor.service';
+import { PaisService } from '../../../services/pais/pais.service';
 
 @Component({
   selector: 'app-create-actor',
@@ -21,14 +21,17 @@ import { PaisService } from '../../../../services/pais/pais.service';
   templateUrl: './create-actor.component.html',
   styleUrl: './create-actor.component.css'
 })
-export class CreateActorComponent implements OnInit{
+export class CreateActorComponent implements OnInit {
 
-  loading: boolean = false;
+  loading: boolean = true; 
   listPath = 'actores';
   error: string | null = null;
-  actor: GetActorDto | null = null;
-  actorId!: string;
-  createActor!: CreateActorDto;
+  createActor: CreateActorDto = { 
+    actorId: 0,
+    nombre: '',
+    apellido: '',
+    paisId: null
+  };
 
   constructor(
     public actorService: ActorService,
@@ -39,9 +42,8 @@ export class CreateActorComponent implements OnInit{
   ) { }
 
   ngOnInit(): void {
-    this.loading  
-    this.getPaises();
-    this.loading = false
+    this.loading = true; 
+    this.getPaises(); 
   }
 
   public paises: WritableSignal<Pais[]> = signal([]);
@@ -51,20 +53,20 @@ export class CreateActorComponent implements OnInit{
     this.paisService.getPaises().subscribe({
       next: (response: any) => {
         const paisesArray: Pais[] = Array.isArray(response) ? response : [];
-
         this.paises.set(paisesArray);
         this.isLoading.set(false);
+        this.loading = false; 
       },
       error: (err) => {
-        console.error('Error al obtener los paises', err);
+        console.error('Error al obtener los países', err);
         this.isLoading.set(false);
+        this.loading = false;
         this.paises.set([]);
       }
     });
   }
 
   guardarCambios() {
-
     this.actorService.createActor(this.createActor).subscribe({
       next: () => {
         alert('Actor creado correctamente');

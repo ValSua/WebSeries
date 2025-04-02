@@ -32,7 +32,7 @@ export class ActorService {
 
   createActor(createActor: CreateActorDto): Observable<CreateResponse> {
     return this.http.post<CreateResponse>(
-      `${this._baseUrl}/actores`,
+      `${this._baseUrl}/actores/createActor`,
       createActor
     );
   }

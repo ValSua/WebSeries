@@ -1,5 +1,5 @@
-export interface CreateActorDto {
-    actorId: number;
+export interface CreateDirectorDto {
+    directorId: number;
     nombre: string;
     apellido: string;
     paisId: number| null;
