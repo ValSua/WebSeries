@@ -18,6 +18,7 @@ using Infrastructure.Interface.Directores;
 using Infrastructure.Interface.Generos;
 using Infrastructure.Interface.Paises;
 using Infrastructure.Interface.Peliculas;
+using Microsoft.EntityFrameworkCore;
 using WebSeries.Data;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -40,7 +41,8 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddDbContext<ProjectDbContext>();
+builder.Services.AddDbContext<ProjectDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // Configuración de inyección de dependencias de la capa de Aplicacion 
 builder.Services.AddScoped<IActoresService, ActoresService>();
@@ -62,16 +64,34 @@ var app = builder.Build();
 app.UseCors("AllowSpecificOrigin");
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
     app.UseSwagger();
     app.UseSwaggerUI();
-}
 
 app.UseHttpsRedirection();
+
+app.UseExceptionHandler(errorApp =>
+{
+    errorApp.Run(async context =>
+    {
+        var error = context.Features.Get<Microsoft.AspNetCore.Diagnostics.IExceptionHandlerFeature>();
+        if (error != null)
+        {
+            await context.Response.WriteAsJsonAsync(new
+            {
+                StatusCode = context.Response.StatusCode,
+                Message = "Internal Server Error",
+                Details = error.Error.Message
+            });
+        }
+    });
+});
 
 app.UseAuthorization();
 
 app.MapControllers();
 
+app.MapGet("/", () => "Hello World");
+
 app.Run();
+
+
