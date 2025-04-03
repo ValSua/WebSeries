@@ -30,8 +30,8 @@ namespace Aplication.Implements.Peliculas
             {
                 if (peliculaDictionary.TryGetValue(peliculaDto.PeliculaId, out var peliculaOriginal))
                 {
-                    peliculaDto.Actors = peliculaOriginal.PeliculasActores.Select(p => p.Actor.Nombre +" "+ p.Actor.Apellido).ToList();
-                    peliculaDto.Directors = peliculaOriginal.PeliculasDirectores.Select(p => p.Director.Nombre + " " + p.Director.Apellido).ToList();
+                    peliculaDto.Actors = peliculaOriginal.PeliculasActores.Select(p => p.Actor.ActorId).ToList();
+                    peliculaDto.Directors = peliculaOriginal.PeliculasDirectores.Select(p => p.Director.DirectorId).ToList();
 
                 }
             }
@@ -44,8 +44,9 @@ namespace Aplication.Implements.Peliculas
             var result = await _peliculasRepository.GetPeliculaById(id);
             var peliculaMapped = AutoMapperConfig.GetMapper<Pelicula, GetPeliculaDto>().Map<GetPeliculaDto>(result);
 
-            var actores = result.PeliculasActores.Select(p => p.Actor.Nombre + " " + p.Actor.Apellido).ToList();
-            var directores = result.PeliculasDirectores.Select(p => p.Director.Nombre + " " + p.Director.Apellido).ToList();
+            //var actores = result.PeliculasActores.Select(p => p.Actor.Nombre + " " + p.Actor.Apellido).ToList();
+            var actores = result.PeliculasActores.Select(p => p.Actor.ActorId).ToList();
+            var directores = result.PeliculasDirectores.Select(p => p.Director.DirectorId).ToList();
 
             peliculaMapped.Actors = actores;
             peliculaMapped.Directors = directores;

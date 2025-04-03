@@ -93,7 +93,7 @@ namespace Transversal.Dto.Peliculas
         /// The directors.
         /// </value>
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
-        public List<string> Directors { get; set; } = new List<string>();
+        public List<long> Directors { get; set; } = new List<long>();
 
         /// <summary>
         /// Gets or sets the actors.
@@ -102,7 +102,7 @@ namespace Transversal.Dto.Peliculas
         /// The actors.
         /// </value>
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
-        public List<string> Actors { get; set; } = new List<string>();
+        public List<long> Actors { get; set; } = new List<long>();
 
     }
 }

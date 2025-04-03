@@ -1,1 +1,13 @@
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark" *ngIf="showNavbar">    
+
+    <ul class="navbar-nav">
+
+      <li class="nav-item" *ngFor="let data of datosMenu">
+        <a class="nav-link" href="{{data.url}}">{{data.titulo}}</a>
+      </li>
+
+    </ul>
+</nav>
+
 <router-outlet></router-outlet>
+

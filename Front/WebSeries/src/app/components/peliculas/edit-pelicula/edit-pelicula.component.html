@@ -30,7 +30,7 @@
                         <select class="form-select" id="generoId" name="generoId" [(ngModel)]="createPelicula.generoId"
                             #generoId="ngModel" required
                             [ngClass]="{'is-invalid': generoId.invalid && (generoId.dirty || generoId.touched)}">
-                            <option value="" disabled>-- Seleccionar País --</option>
+                            <option value="" disabled>-- Seleccionar Género --</option>
                             <option *ngFor="let genero of generos()" [value]="genero.generoId">
                                 {{ genero.nombre }}
                             </option>
@@ -87,24 +87,31 @@
                         </div>
                     </div>
 
-                    <p-multiselect [options]="actores()" [(ngModel)]="createPelicula.actors" name="actoresSelect"
-                        optionLabel="nombre" optionValue="actorId" placeholder="Seleccionar Actores"
-                        [maxSelectedLabels]="3" styleClass="w-full md:w-80">
-                    </p-multiselect>
+                    <div class="mb-3">
+                        <label for="actorId" class="form-label">Actores</label>
+                        <p-multiselect [options]="actores()" [(ngModel)]="createPelicula.actors" name="actoresSelect"
+                            #actoresSelect="ngModel" optionLabel="nombreCompletoActor" optionValue="actorId"
+                            placeholder="-- Seleccionar Actores --" class="form-select" [maxSelectedLabels]="3"
+                            styleClass="w-full md:w-80"
+                            [panelStyle]="{ 'background-color': 'white', 'border': '1px solid #ccc' }" required>
+                        </p-multiselect>
+                        <div *ngIf="actoresSelect.invalid && (actoresSelect.dirty || actoresSelect.touched)"
+                            class="invalid-feedback" style="display: block;">
+                            Debes seleccionar al menos un actor.
+                        </div>
+                    </div>
 
                     <div class="mb-3">
-                        <label for="directors" class="form-label">Directores</label>
-                        <select class="form-select" id="directors" name="directors"
-                            [(ngModel)]="createPelicula.directors" #directors="ngModel" required
-                            [ngClass]="{'is-invalid': directors.invalid && (directors.dirty || directors.touched)}">
-                            <option value="" disabled>-- Seleccionar País --</option>
-                            <option *ngFor="let director of directores()" [value]="director.directorId">
-                                {{ director.nombre }}
-                            </option>
-                        </select>
-                        <div *ngIf="directors.invalid && (directors.dirty || directors.touched)"
-                            class="invalid-feedback">
-                            Debes seleccionar un país.
+                        <label for="directorId" class="form-label">Directores</label>
+                        <p-multiselect [options]="directores()" [(ngModel)]="createPelicula.directors" name="directoresSelect"
+                            #directoresSelect="ngModel" optionLabel="nombreCompletoDirector" optionValue="directorId"
+                            placeholder="-- Seleccionar Directores --" class="form-select" [maxSelectedLabels]="3"
+                            styleClass="w-full md:w-80"
+                            [panelStyle]="{ 'background-color': 'white', 'border': '1px solid #ccc' }" required>
+                        </p-multiselect>
+                        <div *ngIf="directoresSelect.invalid && (directoresSelect.dirty || directoresSelect.touched)"
+                            class="invalid-feedback" style="display: block;">
+                            Debes seleccionar al menos un director.
                         </div>
                     </div>
 

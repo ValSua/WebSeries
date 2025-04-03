@@ -50,6 +50,7 @@ export class EditPeliculaComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.getActores();
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
       this.peliculaId = id;
@@ -60,7 +61,6 @@ export class EditPeliculaComponent implements OnInit {
 
     this.getPaises();
     this.getGeneros();
-    this.getActores();
     this.getDirectores();
     this.loading = false;
     this.isLoading.set(false);
@@ -72,15 +72,13 @@ export class EditPeliculaComponent implements OnInit {
   public actores: WritableSignal<GetActorDto[]> = signal([]);
   public directores: WritableSignal<GetDirectorDto[]> = signal([]);
 
-
   getPeliculaById(id: string): void {
     this.loading = true;
     this.error = null;
-
+  
     this.peliculaService.getPeliculaById(id).subscribe({
       next: (response: GetPeliculaDto) => {
         this.pelicula = response;
-
         this.peliculaId = response.peliculaId.toString();
 
         this.createPelicula = {
@@ -91,18 +89,18 @@ export class EditPeliculaComponent implements OnInit {
           resena: response.resena,
           imagenPortada: response.imagenPortada,
           codigoTrailer: response.codigoTrailer,
-          directors: [],
-          actors: [],
+          directors: response.directors,
+          actors: response.actors,
         };
-
+  
         this.loading = false;
         this.isLoading.set(false);
       },
       error: (err) => {
         if (err.status === 404) {
-          this.error = 'Pelicula no encontrado';
+          this.error = 'Pelicula no encontrada';
         } else {
-          this.error = 'Error al cargar el pelicula';
+          this.error = 'Error al cargar la pelicula';
         }
         this.loading = false;
         this.isLoading.set(false);
@@ -110,10 +108,6 @@ export class EditPeliculaComponent implements OnInit {
       },
     });
   }
-
-  compareActors(a: string, b: string): boolean {
-    return a === b;
-  }  
 
   getPaises() {
     this.paisService.getPaises().subscribe({
@@ -150,9 +144,13 @@ export class EditPeliculaComponent implements OnInit {
   getActores() {
     this.actorService.getActores().subscribe({
       next: (response: any) => {
-        const actoresArray: Actor[] = Array.isArray(response) ? response : [];
+        const actoresArray: GetActorDto[] = Array.isArray(response) ? response : [];
+        const actoresConNombreCompleto = actoresArray.map(actor => ({
+          ...actor,
+          nombreCompletoActor: `${actor.nombre} ${actor.apellido}`
+        }));
 
-        this.actores.set(actoresArray);
+        this.actores.set(actoresConNombreCompleto);
         this.isLoading.set(false);
       },
       error: (err) => {
@@ -167,8 +165,12 @@ export class EditPeliculaComponent implements OnInit {
     this.directorService.getDirectores().subscribe({
       next: (response: any) => {
         const directoresArray: GetDirectorDto[] = Array.isArray(response) ? response : [];
+        const directoresConNombreCompleto = directoresArray.map(director => ({
+          ...director,
+          nombreCompletoDirector: `${director.nombre} ${director.apellido}`
+        }));
 
-        this.directores.set(directoresArray);
+        this.directores.set(directoresConNombreCompleto);
         this.isLoading.set(false);
       },
       error: (err) => {
@@ -179,7 +181,7 @@ export class EditPeliculaComponent implements OnInit {
     });
   }
 
-  guardarCambios() {//
+  guardarCambios() {
     if (!this.peliculaId) {
       this.error = 'ID del pelicula no válido.';
       return;

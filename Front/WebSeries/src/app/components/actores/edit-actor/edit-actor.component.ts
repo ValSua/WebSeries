@@ -102,7 +102,7 @@ export class EditActorComponent implements OnInit {
     });
   }
 
-  guardarCambios() {//
+  guardarCambios() {
     if (!this.actorId) {   
       this.error = 'ID del actor no válido.';
       return;

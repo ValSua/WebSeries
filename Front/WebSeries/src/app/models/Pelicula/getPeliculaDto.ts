@@ -9,6 +9,6 @@ export interface GetPeliculaDto {
     imagenPortada?: string;
     codigoTrailer?: string;
     isDeleted: boolean;
-    directors: string[] ;
-    actors: string[] ;
+    directors: number[] ;
+    actors: number[] ;
   }

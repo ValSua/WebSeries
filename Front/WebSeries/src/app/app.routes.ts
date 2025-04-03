@@ -16,8 +16,10 @@ import { CreatePaisComponent } from './components/paises/create-pais/create-pais
 import { EditPaisComponent } from './components/paises/edit-pais/edit-pais.component';
 import { CreatePeliculaComponent } from './components/peliculas/create-pelicula/create-pelicula.component';
 import { EditPeliculaComponent } from './components/peliculas/edit-pelicula/edit-pelicula.component';
+import { AppComponent } from './app.component';
 
 export const routes: Routes = [
+    {path: 'app-root', component: AppComponent},
     {path: '', redirectTo: 'home_page', pathMatch: 'full'},
     {path: 'login', component: LoginComponent},
     {path: 'home_page', component: HomePageComponent},
