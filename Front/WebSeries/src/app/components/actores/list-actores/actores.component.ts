@@ -1,4 +1,4 @@
-import { Component,   inject, OnInit, signal, WritableSignal } from '@angular/core';
+import { Component, OnInit, signal, WritableSignal } from '@angular/core';
 import { ActorService } from '../../../services/actor/actor.service';
 import { GetActorDto } from '../../../models/Actor/getActorDto';
 import { CommonModule } from '@angular/common';
@@ -9,7 +9,9 @@ import { DeleteResponse } from '../../../models/Actor/delete-response';
 
 @Component({
   selector: 'app-actores',
-  imports: [CommonModule],
+  imports: [
+    CommonModule
+  ],
   templateUrl: './actores.component.html',
   styleUrl: './actores.component.css'
 })

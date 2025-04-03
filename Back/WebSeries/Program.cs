@@ -27,7 +27,7 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowSpecificOrigin", policy =>
     {
-        policy.WithOrigins("http://localhost:4200") // Este es el puerto de tu frontend
+        policy.WithOrigins("https://webseriesapp-dacng0gyf6ejf8cx.eastus-01.azurewebsites.net", "http://localhost:4200") 
               .AllowAnyMethod()
               .AllowAnyHeader()
               .AllowCredentials();
@@ -61,14 +61,6 @@ builder.Services.AddScoped<IPaisesRepository, PaisesRepository>();
 
 var app = builder.Build();
 
-app.UseCors("AllowSpecificOrigin");
-
-// Configure the HTTP request pipeline.
-    app.UseSwagger();
-    app.UseSwaggerUI();
-
-app.UseHttpsRedirection();
-
 app.UseExceptionHandler(errorApp =>
 {
     errorApp.Run(async context =>
@@ -85,6 +77,14 @@ app.UseExceptionHandler(errorApp =>
         }
     });
 });
+
+app.UseCors("AllowSpecificOrigin");
+
+// Configure the HTTP request pipeline.
+    app.UseSwagger();
+    app.UseSwaggerUI();
+
+app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
