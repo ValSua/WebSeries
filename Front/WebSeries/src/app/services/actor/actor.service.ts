@@ -1,4 +1,4 @@
-import { inject, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { ActoresResponse } from '../../models/Actor/actores-response';
@@ -12,14 +12,15 @@ import { GetActorDto } from '../../models/Actor/getActorDto';
 })
 export class ActorService {
 
-  private _baseUrl = 'https://localhost:44324/api';
+  private _baseUrl = 'https://webseries-egdyamdsh7bwh9dx.eastus-01.azurewebsites.net/api';
 
-  private http = inject(HttpClient);
-  constructor() { }
+  //private http = inject(HttpClient);
+  constructor(private http: HttpClient) { }
 
   getActores(): Observable<ActoresResponse> {
     return this.http.get<ActoresResponse>(
-      `${this._baseUrl}/actores/getActores`
+      `${this._baseUrl}/actores/getActores`,
+      { withCredentials: true }
     );
   }
 

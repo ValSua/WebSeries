@@ -20,7 +20,7 @@ import { AppComponent } from './app.component';
 
 export const routes: Routes = [
     {path: 'app-root', component: AppComponent},
-    {path: '', redirectTo: 'home_page', pathMatch: 'full'},
+    {path: '', redirectTo: 'login', pathMatch: 'full'},
     {path: 'login', component: LoginComponent},
     {path: 'home_page', component: HomePageComponent},
     {path: 'actores', component: ActoresComponent},
