@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "node server.js",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
@@ -21,6 +21,7 @@
     "@angular/platform-browser-dynamic": "^19.2.0",
     "@angular/router": "^19.2.0",
     "bootstrap": "^5.3.3",
+    "express": "^5.1.0",
     "ngx-toastr": "^19.0.0",
     "primeicons": "^7.0.0",
     "primeng": "^19.0.10",
