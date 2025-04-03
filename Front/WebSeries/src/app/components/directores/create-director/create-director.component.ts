@@ -3,14 +3,13 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { Router, ActivatedRoute, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { GetActorDto } from '../../../../models/Actor/getActorDto';
-import { CreateActorDto } from '../../../../models/Actor/updateActorDto';
-import { Pais } from '../../../../models/Pais/pais';
-import { ActorService } from '../../../../services/actor/actor.service';
-import { PaisService } from '../../../../services/pais/pais.service';
+import { Pais } from '../../../models/Pais/pais';
+import { PaisService } from '../../../services/pais/pais.service';
+import { CreateDirectorDto } from '../../../models/Director/updateDirectorDto';
+import { DirectorService } from '../../../services/director/director.service';
 
 @Component({
-  selector: 'app-create-actor',
+  selector: 'app-create-director',
   standalone: true,
   imports: [
     CommonModule,
@@ -18,20 +17,23 @@ import { PaisService } from '../../../../services/pais/pais.service';
     RouterModule,
     MatDialogModule
   ],
-  templateUrl: './create-actor.component.html',
-  styleUrl: './create-actor.component.css'
+  templateUrl: './create-director.component.html',
+  styleUrl: './create-director.component.css'
 })
-export class CreateActorComponent implements OnInit{
+export class CreateDirectorComponent implements OnInit {
 
-  loading: boolean = false;
-  listPath = 'actores';
+  loading: boolean = true; 
+  listPath = 'directores';
   error: string | null = null;
-  actor: GetActorDto | null = null;
-  actorId!: string;
-  createActor!: CreateActorDto;
+  createDirector: CreateDirectorDto = { 
+    directorId: 0,
+    nombre: '',
+    apellido: '',
+    paisId: null
+  };
 
   constructor(
-    public actorService: ActorService,
+    public directorService: DirectorService,
     public dialog: MatDialog,
     private router: Router,
     private route: ActivatedRoute,
@@ -39,9 +41,8 @@ export class CreateActorComponent implements OnInit{
   ) { }
 
   ngOnInit(): void {
-    this.loading  
-    this.getPaises();
-    this.loading = false
+    this.loading = true; 
+    this.getPaises(); 
   }
 
   public paises: WritableSignal<Pais[]> = signal([]);
@@ -51,27 +52,27 @@ export class CreateActorComponent implements OnInit{
     this.paisService.getPaises().subscribe({
       next: (response: any) => {
         const paisesArray: Pais[] = Array.isArray(response) ? response : [];
-
         this.paises.set(paisesArray);
         this.isLoading.set(false);
+        this.loading = false; 
       },
       error: (err) => {
-        console.error('Error al obtener los paises', err);
+        console.error('Error al obtener los países', err);
         this.isLoading.set(false);
+        this.loading = false;
         this.paises.set([]);
       }
     });
   }
 
   guardarCambios() {
-
-    this.actorService.createActor(this.createActor).subscribe({
+    this.directorService.createDirector(this.createDirector).subscribe({
       next: () => {
-        alert('Actor creado correctamente');
-        this.router.navigate(['/actores']);
+        alert('Director creado correctamente');
+        this.router.navigate(['/directores']);
       },
       error: (err) => {
-        this.error = 'Error al crear el actor.';
+        this.error = 'Error al crear el director.';
         console.error(err);
       },
     });

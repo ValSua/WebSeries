@@ -2,5 +2,5 @@ export interface CreateActorDto {
     actorId: number;
     nombre: string;
     apellido: string;
-    paisId: number;
+    paisId: number| null;
 }

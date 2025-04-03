@@ -1,0 +1,40 @@
+<div class="container">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h2 class="mb-0">Gestión de Directores</h2>
+      <div> 
+        
+      </div>
+      <button class="btn btn-primary" (click)="openDirectorCreate()">Nuevo director</button>
+    </div>
+  
+    <div *ngIf="isLoading()">
+      <p>Cargando datos...</p>
+    </div>
+  
+    <table *ngIf="!isLoading() && directores().length > 0" class="table table-striped">
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Apellido</th>
+          <th>País</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let director of directores()">
+          <td>{{ director.nombre }}</td>
+          <td>{{ director.apellido }}</td>
+          <td>{{ director.paisNombre }}</td>
+          <td>
+            <button class="btn btn-primary btn-sm" (click)="openDirectorEdit(director.directorId)">Editar</button>
+            <button class="btn btn-danger btn-sm ms-2" (click)="eliminarDirector(director.directorId)">Eliminar</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  
+    <div *ngIf="!isLoading() && directores().length === 0">
+      <p>No hay directores disponibles.</p>
+    </div>
+  </div>
+  

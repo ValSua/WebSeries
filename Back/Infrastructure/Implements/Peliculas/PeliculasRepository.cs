@@ -131,7 +131,7 @@ namespace Infrastructure.Implements.Peliculas
                 GeneroId = pelicula.GeneroId,
                 PaisId = pelicula.PaisId,
                 Titulo = pelicula.Titulo,
-                Reseña = pelicula.Reseña,
+                Resena = pelicula.Resena,
                 ImagenPortada = pelicula.ImagenPortada,
                 CodigoTrailer = pelicula.CodigoTrailer
             };

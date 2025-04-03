@@ -33,7 +33,7 @@ export class HomePageComponent {
   }
 
   peliculas() {
-    this.router.navigate(['/actores'])
+    this.router.navigate(['/peliculas'])
   }
 
   generos() {

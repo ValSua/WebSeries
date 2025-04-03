@@ -1,0 +1,28 @@
+<div class="container">
+    <div class="card mb-4">
+      <div class="card-header">
+        <h3>Crear Pais</h3>
+      </div>
+      <div class="card-body">
+
+        <div *ngIf="!loading">
+          <form #paisForm="ngForm" (ngSubmit)="guardarCambios()" novalidate>
+            <div class="mb-3">
+              <label for="nombre" class="form-label">Nombre</label>
+              <input type="text" class="form-control" id="nombre" name="nombre" [(ngModel)]="createPais.nombre"
+                #nombre="ngModel" required
+                [ngClass]="{'is-invalid': nombre.invalid && (nombre.dirty || nombre.touched)}" />
+              <div *ngIf="nombre.invalid && (nombre.dirty || nombre.touched)" class="invalid-feedback">
+                El nombre es obligatorio.
+              </div>
+            </div>
+  
+            <div class="d-flex gap-2">
+              <button type="submit" class="btn btn-success" [disabled]="paisForm.invalid">Guardar</button>
+              <button type="button" class="btn btn-secondary" (click)="cancelar()">Cancelar</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>

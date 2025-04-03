@@ -1,0 +1,54 @@
+<div class="container">
+    <div class="card mb-4">
+        <div class="card-header">
+            <h3>Crear Actor</h3>
+        </div>
+        <div class="card-body">
+
+            <!-- Mostrar formulario si hay datos -->
+            <div *ngIf="!loading">
+                <form #actorForm="ngForm" (ngSubmit)="guardarCambios()" novalidate>
+                    <div class="mb-3">
+                        <label for="nombre" class="form-label">Nombre</label>
+                        <input type="text" class="form-control" id="nombre" name="nombre"
+                            [(ngModel)]="createActor.nombre" #nombre="ngModel" required
+                            [ngClass]="{'is-invalid': nombre.invalid && (nombre.dirty || nombre.touched)}" />
+                        <div *ngIf="nombre.invalid && (nombre.dirty || nombre.touched)" class="invalid-feedback">
+                            El nombre es obligatorio.
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="apellido" class="form-label">Apellido</label>
+                        <input type="text" class="form-control" id="apellido" name="apellido"
+                            [(ngModel)]="createActor.apellido" #apellido="ngModel" required
+                            [ngClass]="{'is-invalid': apellido.invalid && (apellido.dirty || apellido.touched)}" />
+                        <div *ngIf="apellido.invalid && (apellido.dirty || apellido.touched)" class="invalid-feedback">
+                            El apellido es obligatorio.
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="paisId" class="form-label">País</label>
+                        <select class="form-select" id="paisId" name="paisId" [(ngModel)]="createActor.paisId"
+                            #paisId="ngModel" required
+                            [ngClass]="{'is-invalid': paisId.invalid && (paisId.dirty || paisId.touched)}">
+                            <option value=null disabled>-- Seleccionar País --</option>
+                            <option *ngFor="let pais of paises()" [value]="pais.paisId">
+                                {{ pais.nombre }}
+                            </option>
+                        </select>
+                        <div *ngIf="paisId.invalid && (paisId.dirty || paisId.touched)" class="invalid-feedback">
+                            Debes seleccionar un país.
+                        </div>
+                    </div>
+
+                    <div class="d-flex gap-2">
+                        <button type="submit" class="btn btn-success" [disabled]="actorForm.invalid">Guardar</button>
+                        <button type="button" class="btn btn-secondary" (click)="cancelar()">Cancelar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

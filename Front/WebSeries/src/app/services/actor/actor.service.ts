@@ -2,9 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { ActoresResponse } from '../../models/Actor/actores-response';
-import { ActorResponse } from '../../models/Actor/actor-response';
 import { CreateResponse } from '../../models/Actor/create-response';
-import { EditResponse } from '../../models/Actor/edit-response';
 import { DeleteResponse } from '../../models/Actor/delete-response';
 import { CreateActorDto } from '../../models/Actor/updateActorDto';
 import { GetActorDto } from '../../models/Actor/getActorDto';
@@ -32,7 +30,7 @@ export class ActorService {
 
   createActor(createActor: CreateActorDto): Observable<CreateResponse> {
     return this.http.post<CreateResponse>(
-      `${this._baseUrl}/actores`,
+      `${this._baseUrl}/actores/createActor`,
       createActor
     );
   }
