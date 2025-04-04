@@ -28,6 +28,8 @@ public partial class ProjectDbContext : DbContext
 
     public virtual DbSet<PeliculasDirectore> PeliculasDirectores { get; set; }
 
+    public virtual DbSet<Usuario> Usuarios { get; set; }
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         => optionsBuilder.UseSqlServer("Name=ConnectionStrings:DefaultConnection");
 
@@ -122,6 +124,16 @@ public partial class ProjectDbContext : DbContext
             entity.HasOne(d => d.Pelicula).WithMany(p => p.PeliculasDirectores)
                 .HasForeignKey(d => d.PeliculaId)
                 .HasConstraintName("FK__Peliculas__Pelic__6D0D32F4");
+        });
+
+        modelBuilder.Entity<Usuario>(entity =>
+        {
+            entity.HasKey(e => e.UsuarioId).HasName("PK__Usuarios__57B3EA4B267B5DDF");
+
+            entity.HasIndex(e => e.Login, "UQ__Usuarios__5E55825B204709A7").IsUnique();
+
+            entity.Property(e => e.Login).HasMaxLength(50);
+            entity.Property(e => e.Password).HasMaxLength(50);
         });
 
         OnModelCreatingPartial(modelBuilder);
