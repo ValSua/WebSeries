@@ -135,5 +135,13 @@
             /// </summary>
             public const string DeletePelicula = "api/peliculas/deletePelicula/{id:long}";
         }
+
+        public static class Usuarios
+        {
+            /// <summary>
+            /// The get usuarios
+            /// </summary>
+            public const string GetUsuarios = "api/usuarios/getUsuarios";
+        }
     }
 }

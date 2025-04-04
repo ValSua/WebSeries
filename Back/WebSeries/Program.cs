@@ -3,21 +3,25 @@ using Aplication.Implements.Directores;
 using Aplication.Implements.Generos;
 using Aplication.Implements.Paises;
 using Aplication.Implements.Peliculas;
+using Aplication.Implements.Usuarios;
 using Aplication.Interface.Actores;
 using Aplication.Interface.Directores;
 using Aplication.Interface.Generos;
 using Aplication.Interface.Paises;
 using Aplication.Interface.Peliculas;
+using Aplication.Interface.Usuarios;
 using Infrastructure.Implements.Actores;
 using Infrastructure.Implements.Directores;
 using Infrastructure.Implements.Generos;
 using Infrastructure.Implements.Paises;
 using Infrastructure.Implements.Peliculas;
+using Infrastructure.Implements.Usuarios;
 using Infrastructure.Interface.Actores;
 using Infrastructure.Interface.Directores;
 using Infrastructure.Interface.Generos;
 using Infrastructure.Interface.Paises;
 using Infrastructure.Interface.Peliculas;
+using Infrastructure.Interface.Usuarios;
 using Microsoft.EntityFrameworkCore;
 using WebSeries.Data;
 
@@ -50,6 +54,7 @@ builder.Services.AddScoped<IDirectoresService, DirectoresService>();
 builder.Services.AddScoped<IGenerosService, GenerosService>();
 builder.Services.AddScoped<IPeliculasService, PeliculasService>();
 builder.Services.AddScoped<IPaisesService, PaisesService>();
+builder.Services.AddScoped<IUsuariosService, UsuariosService>();
 
 // Configuración de inyección de dependencias de la capa de Infrastructura
 builder.Services.AddScoped<IActoresRepository, ActoresRepository>();
@@ -57,6 +62,7 @@ builder.Services.AddScoped<IDirectoresRepository, DirectoresRepository>();
 builder.Services.AddScoped<IGenerosRepository, GenerosRepository>();
 builder.Services.AddScoped<IPeliculasRepository, PeliculasRepository>();
 builder.Services.AddScoped<IPaisesRepository, PaisesRepository>();
+builder.Services.AddScoped<IUsuariosRepository, UsuariosRepository>();
 
 
 var app = builder.Build();
