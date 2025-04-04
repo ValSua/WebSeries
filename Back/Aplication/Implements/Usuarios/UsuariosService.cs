@@ -22,5 +22,12 @@ namespace Aplication.Implements.Usuarios
 
             return usuarioMapped;
         }
+
+        public bool ValidatePassword(long id, string password)
+        {
+            var result = _usuariosRepository.ValidatePassword(id, password);
+
+            return result;
+        }
     }
 }

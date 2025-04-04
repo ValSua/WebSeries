@@ -16,12 +16,5 @@
         /// The login.
         /// </value>
         public string Login { get; set; } = null!;
-        /// <summary>
-        /// Gets or sets the password.
-        /// </summary>
-        /// <value>
-        /// The password.
-        /// </value>
-        public string Password { get; set; } = null!;
     }
 }

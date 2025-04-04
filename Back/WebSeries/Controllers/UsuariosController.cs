@@ -1,5 +1,6 @@
 ﻿using Aplication.Interface.Usuarios;
 using Microsoft.AspNetCore.Mvc;
+using Transversal.Dto.Actores;
 using Transversal.Dto.Usuarios;
 using Transversal.Helpers;
 
@@ -28,5 +29,14 @@ namespace WebSeries.Controllers
         /// <returns></returns>
         [HttpGet(RoutesPath.Usuarios.GetUsuarios)]
         public async Task<IEnumerable<GetUsuarioDto>> GetUsuarios() => await _usuariosService.GetUsuarios();
+
+        /// <summary>
+        /// Validates the password.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <param name="password">The password.</param>
+        /// <returns></returns>
+        [HttpGet(RoutesPath.Usuarios.ValidatePassword)]
+        public bool ValidatePassword(long id, string password) => _usuariosService.ValidatePassword(id, password);
     }
 }

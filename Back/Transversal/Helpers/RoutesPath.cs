@@ -142,6 +142,10 @@
             /// The get usuarios
             /// </summary>
             public const string GetUsuarios = "api/usuarios/getUsuarios";
+            /// <summary>
+            /// The validate password
+            /// </summary>
+            public const string ValidatePassword = "api/usuarios/validatePassword";
         }
     }
 }

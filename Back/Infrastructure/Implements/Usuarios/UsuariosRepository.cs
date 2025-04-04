@@ -19,5 +19,18 @@ namespace Infrastructure.Implements.Usuarios
             return await _context.Usuarios
                         .ToListAsync();
         }
+
+        public bool ValidatePassword(long usuarioId, string passwordIngresado)
+        {
+            var usuario = _context.Usuarios
+                                .FirstOrDefault(u => u.UsuarioId == usuarioId);
+
+            if (usuario == null)
+            {
+                return false;
+            }
+
+            return usuario.Password == passwordIngresado;
+        }
     }
 }
