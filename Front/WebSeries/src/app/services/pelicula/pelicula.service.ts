@@ -12,7 +12,7 @@ import { CreatePeliculaDto } from '../../models/Pelicula/updatePeliculaDto';
 })
 export class PeliculaService {
 
-  private _baseUrl = 'https://localhost:44324/api';
+  private _baseUrl = 'https://webseries-egdyamdsh7bwh9dx.eastus-01.azurewebsites.net/api';
 
   private http = inject(HttpClient);
   constructor() { }
