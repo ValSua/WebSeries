@@ -66,20 +66,20 @@ namespace Infrastructure.Implements.Peliculas
             peliculaExistente.PeliculasDirectores.Clear();
             peliculaExistente.PeliculasActores.Clear();
 
-            var directoresIds = pelicula.PeliculasDirectores.Select(d => d.DirectorId).ToList();
-            var directores = await _context.PeliculasDirectores
-                .Where(d => directoresIds.Contains(d.DirectorId))
-                .ToListAsync();
-            foreach (var director in directores)
+            //var directoresIds = pelicula.PeliculasDirectores.Select(d => d.DirectorId).ToList();
+            //var directores = await _context.PeliculasDirectores
+            //    .Where(d => directoresIds.Contains(d.DirectorId))
+            //    .ToListAsync();
+            foreach (var director in pelicula.PeliculasDirectores)
             {
                 peliculaExistente.PeliculasDirectores.Add(director);
             }
 
-            var actoresIds = pelicula.PeliculasActores.Select(d => d.ActorId).ToList();
-            var actores = await _context.Peliculas_Actores
-                .Where(d => actoresIds.Contains(d.ActorId))
-                .ToListAsync();
-            foreach (var actor in actores)
+            //var actoresIds = pelicula.PeliculasActores.Select(d => d.ActorId).ToList();
+            //var actores = await _context.Peliculas_Actores
+            //    .Where(d => actoresIds.Contains(d.ActorId))
+            //    .ToListAsync();
+            foreach (var actor in pelicula.PeliculasActores)
             {
                 peliculaExistente.PeliculasActores.Add(actor);
             }

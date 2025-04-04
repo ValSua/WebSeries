@@ -68,13 +68,13 @@ namespace Aplication.Implements.Peliculas
             var peliculaMapped = specialMapper.Map<Pelicula>(updatePeliculaDto);
             peliculaMapped.PeliculaId = id;
 
-            //peliculaMapped.PeliculasActores = updatePeliculaDto.Actors
-            //    .Select(actorId => new PeliculasActore { ActorId = actorId }) 
-            //    .ToList();
+            peliculaMapped.PeliculasActores = updatePeliculaDto.Actors
+                .Select(actorId => new PeliculasActore { ActorId = actorId, PeliculaId = id })
+                .ToList();
 
-            //peliculaMapped.PeliculasDirectores = updatePeliculaDto.Directors
-            //    .Select(directorId => new PeliculasDirectore { DirectorId = directorId })
-            //    .ToList();
+            peliculaMapped.PeliculasDirectores = updatePeliculaDto.Directors
+                .Select(directorId => new PeliculasDirectore { DirectorId = directorId, PeliculaId = id })
+                .ToList();
 
             return await _peliculasRepository.UpdatePelicula(id, peliculaMapped);
         }

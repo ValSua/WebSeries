@@ -14,7 +14,6 @@ export class ActorService {
 
   private _baseUrl = 'https://webseries-egdyamdsh7bwh9dx.eastus-01.azurewebsites.net/api';
 
-  //private http = inject(HttpClient);
   constructor(private http: HttpClient) { }
 
   getActores(): Observable<ActoresResponse> {

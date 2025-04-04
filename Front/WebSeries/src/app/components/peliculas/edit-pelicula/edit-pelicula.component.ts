@@ -189,7 +189,7 @@ export class EditPeliculaComponent implements OnInit {
 
     this.peliculaService.updatePelicula(this.peliculaId, this.createPelicula).subscribe({
       next: () => {
-        alert('Pelicula actualizado correctamente');
+        alert('Pelicula actualizada correctamente');
         this.router.navigate(['/peliculas']);
       },
       error: (err) => {

@@ -41,14 +41,11 @@ export class LoginComponent implements OnInit {
   login() {
     this.errorMessage = '';
     
-    // Validar campos vacíos
     if (!this.loginInput || !this.passwordInput) {
       this.errorMessage = 'Por favor, complete todos los campos';
       return;
     }
 
-    console.log("llegó")
-    // Buscar usuario por login (como es único)
     const usuarioEncontrado = this.usuarios().find(
       user => user.login.toLowerCase() === this.loginInput.toLowerCase()
     );
@@ -58,14 +55,12 @@ export class LoginComponent implements OnInit {
       return;
     }
 
-    // Llamada al backend para validar la contraseña
     this.isLoading.set(true);
     this.usuarioService.validatePassword(usuarioEncontrado.usuarioId, this.passwordInput)
       .subscribe({
         next: (response: any) => {
           this.isLoading.set(false);
-          console.log(response)
-          if (response) {  // Asumiendo que el backend devuelve un boolean
+          if (response) { 
             this.router.navigate(['home_page']);
           } else {
             alert('Usuario o contraseña incorrecta');

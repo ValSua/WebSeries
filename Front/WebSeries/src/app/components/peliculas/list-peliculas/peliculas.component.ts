@@ -59,7 +59,7 @@ export class PeliculasComponent implements OnInit {
     if (confirm('¿Está seguro que desea eliminar este pelicula?')) {
       this.peliculaService.deletePelicula(id.toString()).subscribe({
         next: (response: DeleteResponse) => {
-          alert(`Pelicula eliminado con exito`);
+          alert(`Pelicula eliminada con exito`);
           this.getAll();
           if (response.isSuccess) {
             this.getAll();
